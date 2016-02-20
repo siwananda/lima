@@ -2,8 +2,8 @@
     var p = angular.module('LimaApp.Project', []);
 
     var pControllers = require("./p-controllers")($);
-    p.controller('ProjectListCtrl', pControllers.ProjectListCtrl);
-    p.controller('ProjectDetailCtrl', pControllers.ProjectDetailCtrl);
+    p.controller('ProjectListController', pControllers.ProjectListController);
+    p.controller('ProjectController', pControllers.ProjectController);
 
     return p;
 })(window, window.angular, window.$);

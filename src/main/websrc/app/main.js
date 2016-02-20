@@ -7,7 +7,7 @@ var LimaApp = angular.module('LimaApp',
         //Modules
         require('./projects/p-app')
     ])
-    .config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) {
+    .config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider, ENDPOINTS) {
 
         //$httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
 
@@ -67,7 +67,16 @@ var LimaApp = angular.module('LimaApp',
                         controller: 'ProjectController'
                     }
                 },
-                resolve: {}
+                resolve: {
+                    project: function (LimaEntity, $stateParams) {
+                        if (_.isEqual($stateParams.id, "new")) {
+                            return {};
+                        } else {
+                            var baseProject = LimaEntity.one(ENDPOINTS.PROJECT_REQUEST_PATH, $stateParams.id);
+                            return baseProject.get();
+                        }
+                    }
+                }
             })
             .state('tasks', {
                 parent: 'site',
