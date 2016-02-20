@@ -1,6 +1,5 @@
 package com.byteme.lima.controller
 
-import com.byteme.lima.domain.Task
 import com.byteme.lima.domain.User
 import com.byteme.lima.domain.User.Type
 import com.byteme.lima.service.UserService
@@ -26,7 +25,7 @@ class UserController {
             produces = APPLICATION_JSON_VALUE
     )
     List<User> get(
-            @RequestParam(required = false) Number id,
+            @RequestParam(required = false) String id,
             @RequestParam(required = false) String code,
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String email,
@@ -34,9 +33,9 @@ class UserController {
     ) {
         if (id)     return [this.userService.findById(id)]
         if (code)   return [this.userService.findByCode(code)]
-        if (name)   return [this.userService.findAllByName(name)]
+        if (name)   return  this.userService.findAllByName(name)
         if (email)  return [this.userService.findByEmail(email)]
-        if (type)   return [this.userService.findAllByType()]
+        if (type)   return  this.userService.findAllByType(type)
 
         this.userService.findAll()
     }
@@ -48,5 +47,14 @@ class UserController {
     )
     User get(@PathVariable Number id) {
         this.userService.findById(id)
+    }
+
+    @RequestMapping(
+            value = "/bootstrap",
+            method = GET,
+            produces = APPLICATION_JSON_VALUE
+    )
+    void bootstrap() {
+        this.userService.bootstrap()
     }
 }

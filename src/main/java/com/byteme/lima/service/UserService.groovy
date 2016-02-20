@@ -2,10 +2,15 @@ package com.byteme.lima.service
 
 import com.byteme.lima.domain.User
 import com.byteme.lima.domain.User.Type
+import com.byteme.lima.util.Constants
+import com.fasterxml.jackson.core.type.TypeReference
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.mongodb.DBObject
 import org.springframework.stereotype.Service
 
 @Service
 class UserService extends AbstractService {
+
     List<User> findAll() {
         [
                 new User(
@@ -21,9 +26,9 @@ class UserService extends AbstractService {
         ]
     }
 
-    User findById(Number id) {
+    User findById(String id) {
         new User(
-                id: 1,
+                id: "1",
                 code: "admin-001",
                 name: "Administrator",
                 email: "admin@lima.com",
@@ -33,7 +38,7 @@ class UserService extends AbstractService {
 
     User findByCode(String code) {
         new User(
-                id: 1,
+                id: "1",
                 code: code,
                 name: "User with code [${code}]",
                 email: "${code}@lima.com",
@@ -43,7 +48,7 @@ class UserService extends AbstractService {
 
     User findByEmail(String email) {
         new User(
-                id: 1,
+                id: "1",
                 code: "code-001",
                 name: "name-001",
                 email: email,
@@ -56,7 +61,7 @@ class UserService extends AbstractService {
         for (number in 1..5) {
             result.add(
                     new User(
-                            id: number,
+                            id: "${number}",
                             code: "code-${number}",
                             name: name,
                             email: "${name}@lima.com",
@@ -73,7 +78,7 @@ class UserService extends AbstractService {
         for (number in 1..5) {
             result.add(
                     new User(
-                            id: number,
+                            id: "${number}",
                             code: "admin-${number}",
                             name: "Administrator #${number}",
                             email: "admin.${number}@lima.com",
@@ -83,5 +88,24 @@ class UserService extends AbstractService {
         }
 
         result
+    }
+
+    void save(User user) {
+        this.db.save(user, "users")
+    }
+
+    void removeAll() {
+        for (DBObject user: this.db.getCollection("users").find()) {
+            this.db.remove(user, "users")
+        }
+    }
+
+    void bootstrap() {
+        this.removeAll()
+
+        List<User> users = new ObjectMapper().readValue(Constants.Bootstrap.USERS, new TypeReference<List<User>>() { })
+        for (user in users) {
+            this.save(user)
+        }
     }
 }
