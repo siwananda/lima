@@ -7,17 +7,17 @@ import org.springframework.boot.builder.SpringApplicationBuilder
 import org.springframework.boot.context.web.SpringBootServletInitializer
 import org.springframework.core.env.Environment
 
-@SpringBootApplication
-class Application extends SpringBootServletInitializer {
-    static Log LOG = LogFactory.getLog(Application.class)
+//@SpringBootApplication
+class GroovyApp /*extends SpringBootServletInitializer*/ {
+    /*static Log LOG = LogFactory.getLog(GroovyApp.class)
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        application.sources(Application.class);
+        application.sources(GroovyApp.class);
     }
 
     public static void main(String[] args) throws Exception {
-        SpringApplicationBuilder app = new Application().configure(new SpringApplicationBuilder(Application.class));
+        SpringApplicationBuilder app = new GroovyApp().configure(new SpringApplicationBuilder(GroovyApp.class));
         Environment env = app.run(args).getEnvironment();
         LOG.info(
 """
@@ -29,5 +29,5 @@ ByteMe - LIMA
 ============================================================
 """
         )
-    }
+    }*/
 }

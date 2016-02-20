@@ -1,6 +1,6 @@
 package com.byteme.lima.config
 
-import com.byteme.lima.Application
+import com.byteme.lima.GroovyApp
 import org.apache.commons.logging.Log
 import org.apache.commons.logging.LogFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -14,7 +14,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 @Configuration
-@ComponentScan(basePackageClasses = Application.class)
+@ComponentScan(basePackageClasses = GroovyApp.class)
 @EnableWebMvc
 @EnableAutoConfiguration
 class AppConfig extends WebMvcConfigurerAdapter {

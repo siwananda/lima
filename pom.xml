@@ -24,7 +24,7 @@
 
         <commons-lang3.version>3.4</commons-lang3.version>
         <frontend-maven-plugin.version>0.0.28</frontend-maven-plugin.version>
-        <gmavenplus-plugin.version>1.5</gmavenplus-plugin.version>
+        <lombok.version>1.16.6</lombok.version>
         <node.version>v4.2.6</node.version>
         <npm.version>3.5.0</npm.version>
     </properties>
@@ -64,6 +64,11 @@
             <artifactId>commons-lang3</artifactId>
             <version>${commons-lang3.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -71,9 +76,20 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <!--<configuration>
+                    <mainClass>com.byteme.lima.JavaApp</mainClass>
+                    <layout>JAR</layout>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>-->
             </plugin>
 
-            <plugin>
+            <!--<plugin>
                 <groupId>org.codehaus.gmavenplus</groupId>
                 <artifactId>gmavenplus-plugin</artifactId>
                 <version>${gmavenplus-plugin.version}</version>
@@ -91,7 +107,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>-->
         </plugins>
     </build>
 
