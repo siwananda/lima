@@ -11,7 +11,7 @@ echo Executing npm run build
 call npm run build
 
 echo Bundling and Packaging
-call mvn clean package
+call mvn clean package -DskipTests
 
 echo =====
 echo  END 
