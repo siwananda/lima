@@ -75,15 +75,4 @@ public class TeamService extends AbstractService {
             this.db.remove(team, "teams");
         }
     }
-
-    public void bootstrap() throws IOException {
-        this.removeAll();
-
-        List<BasicDBObject> items = new ObjectMapper().readValue(this.resourceLoader.getResource("classpath:teams.json").getFile(), new TypeReference<List<BasicDBObject>>() {});
-        for (BasicDBObject item: items) {
-            item.put("_id", new ObjectId(item.get("id").toString()));
-            item.remove("id");
-            this.db.save(item, "teams");
-        }
-    }
 }

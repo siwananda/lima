@@ -3,13 +3,16 @@ package com.byteme.lima.service;
 import com.byteme.lima.domain.Project;
 import com.byteme.lima.domain.Task;
 import com.byteme.lima.domain.Team;
+import com.byteme.lima.exception.IllegalStateException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
+import org.apache.commons.lang3.StringUtils;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -94,14 +97,17 @@ public class ProjectService extends AbstractService {
         }
     }
 
-    public void bootstrap() throws IOException {
-        this.removeAll();
+    public Project add(Project project, Task task) throws IllegalStateException {
+        if (project == null) throw new IllegalStateException("project is null");
+        if (StringUtils.isBlank(project.id)) throw new IllegalStateException("project.id is null");
+        if (task == null) throw new IllegalStateException("task is null");
+        if (StringUtils.isBlank(task.id)) throw new IllegalStateException("task.id is null");
 
-        List<BasicDBObject> items = new ObjectMapper().readValue(this.resourceLoader.getResource("classpath:projects.json").getFile(), new TypeReference<List<BasicDBObject>>() {});
-        for (BasicDBObject item: items) {
-            item.put("_id", new ObjectId(item.get("id").toString()));
-            item.remove("id");
-            this.db.save(item, "projects");
-        }
+        if (project.taskIds == null) project.taskIds = new ArrayList<>();
+
+        project.taskIds.add(task.id);
+
+        project = this.fetchTasks(project);
+        return project;
     }
 }

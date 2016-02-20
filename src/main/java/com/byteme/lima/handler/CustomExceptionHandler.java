@@ -1,6 +1,7 @@
 package com.byteme.lima.handler;
 
 import com.byteme.lima.domain.CustomResponse;
+import com.byteme.lima.exception.NotFoundException;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -23,13 +24,23 @@ public class CustomExceptionHandler {
 
     @ExceptionHandler(
             value = {
+                    NotFoundException.class
+            }
+    )
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public CustomResponse handle404(HttpServletRequest request, Throwable throwable) {
+        return this.handle(HttpStatus.NOT_FOUND, request, throwable, true);
+    }
+
+    @ExceptionHandler(
+            value = {
                     IOException.class,
                     Exception.class
             }
     )
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public CustomResponse handle500(HttpServletRequest request, Throwable exception) {
-        return this.handle(HttpStatus.INTERNAL_SERVER_ERROR, request, exception, true);
+    public CustomResponse handle500(HttpServletRequest request, Throwable throwable) {
+        return this.handle(HttpStatus.INTERNAL_SERVER_ERROR, request, throwable, true);
     }
 
     private CustomResponse handle(HttpStatus status, HttpServletRequest request, Throwable throwable, boolean withStackFrames) {
