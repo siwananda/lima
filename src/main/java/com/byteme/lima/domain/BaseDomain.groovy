@@ -4,7 +4,7 @@ import org.springframework.data.annotation.Id
 
 class BaseDomain {
     @Id
-    String id
+    Number id
     String code
     String name
 }

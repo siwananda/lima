@@ -1,6 +1,7 @@
 package com.byteme.lima.service
 
 import com.byteme.lima.domain.User
+import com.byteme.lima.domain.User.Type
 import org.springframework.stereotype.Service
 
 @Service
@@ -18,5 +19,69 @@ class UserService extends AbstractService {
                         name: "name-002"
                 )
         ]
+    }
+
+    User findById(Number id) {
+        new User(
+                id: 1,
+                code: "admin-001",
+                name: "Administrator",
+                email: "admin@lima.com",
+                type: Type.ADMIN
+        )
+    }
+
+    User findByCode(String code) {
+        new User(
+                id: 1,
+                code: code,
+                name: "User with code [${code}]",
+                email: "${code}@lima.com",
+                type: Type.USER
+        )
+    }
+
+    User findByEmail(String email) {
+        new User(
+                id: 1,
+                code: "code-001",
+                name: "name-001",
+                email: email,
+                type: Type.USER
+        )
+    }
+
+    List<User> findAllByName(String name) {
+        List<User> result = new ArrayList<>()
+        for (number in 1..5) {
+            result.add(
+                    new User(
+                            id: number,
+                            code: "code-${number}",
+                            name: name,
+                            email: "${name}@lima.com",
+                            type: Type.USER
+                    )
+            )
+        }
+
+        result
+    }
+
+    List<User> findAllByType(Type type) {
+        List<User> result = new ArrayList<>()
+        for (number in 1..5) {
+            result.add(
+                    new User(
+                            id: number,
+                            code: "admin-${number}",
+                            name: "Administrator #${number}",
+                            email: "admin.${number}@lima.com",
+                            type: User.Type.ADMIN
+                    )
+            )
+        }
+
+        result
     }
 }
