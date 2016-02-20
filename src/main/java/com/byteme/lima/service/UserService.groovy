@@ -5,93 +5,81 @@ import com.byteme.lima.domain.User.Type
 import com.byteme.lima.util.Constants
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.mongodb.BasicDBObject
 import com.mongodb.DBObject
+import org.bson.types.ObjectId
 import org.springframework.stereotype.Service
+
+import java.util.stream.StreamSupport
 
 @Service
 class UserService extends AbstractService {
 
     List<User> findAll() {
-        [
-                new User(
-                        id: 1,
-                        code: "code-001",
-                        name: "name-001"
-                ),
-                new User(
-                        id: 2,
-                        code: "code-002",
-                        name: "name-002"
-                )
-        ]
+        this.db.findAll(User.class, "users")
     }
 
     User findById(String id) {
-        new User(
-                id: "1",
-                code: "admin-001",
-                name: "Administrator",
-                email: "admin@lima.com",
-                type: Type.ADMIN
+        this.db.getConverter().read(
+                User.class,
+                this.db.getCollection("users").findOne(new ObjectId(id))
         )
     }
 
     User findByCode(String code) {
-        new User(
-                id: "1",
-                code: code,
-                name: "User with code [${code}]",
-                email: "${code}@lima.com",
-                type: Type.USER
+        this.db.getConverter().read(
+                User.class,
+                this.db.getCollection("users").findOne(
+                        new BasicDBObject("code", code)
+                )
         )
     }
 
     User findByEmail(String email) {
-        new User(
-                id: "1",
-                code: "code-001",
-                name: "name-001",
-                email: email,
-                type: Type.USER
+        this.db.getConverter().read(
+                User.class,
+                this.db.getCollection("users").findOne(
+                        new BasicDBObject("email", email)
+                )
         )
     }
 
     List<User> findAllByName(String name) {
         List<User> result = new ArrayList<>()
-        for (number in 1..5) {
-            result.add(
-                    new User(
-                            id: "${number}",
-                            code: "code-${number}",
-                            name: name,
-                            email: "${name}@lima.com",
-                            type: Type.USER
-                    )
-            )
-        }
+
+        DBObject query = new BasicDBObject()
+        query.put("name", name)
+
+        this.db.getCollection("users").find(query).asCollection().forEach(
+                {
+                    result.add(this.db.getConverter().read(User.class, it))
+                }
+        )
 
         result
     }
 
     List<User> findAllByType(Type type) {
         List<User> result = new ArrayList<>()
-        for (number in 1..5) {
-            result.add(
-                    new User(
-                            id: "${number}",
-                            code: "admin-${number}",
-                            name: "Administrator #${number}",
-                            email: "admin.${number}@lima.com",
-                            type: User.Type.ADMIN
-                    )
-            )
-        }
+
+        DBObject query = new BasicDBObject()
+        query.put("type", type.name())
+
+        this.db.getCollection("users").find(query).asCollection().forEach(
+                {
+                    result.add(this.db.getConverter().read(User.class, it))
+                }
+        )
 
         result
     }
 
     void save(User user) {
         this.db.save(user, "users")
+    }
+
+    void remove(User user) {
+        this.db.remove(user, "users")
     }
 
     void removeAll() {

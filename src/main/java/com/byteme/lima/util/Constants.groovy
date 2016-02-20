@@ -7,10 +7,10 @@ interface Constants {
         static final String USERS =
                 """
 [{
-  "code": "USER-87195",
-  "name": "Douglas Evans",
-  "email": "devans0@yelp.com",
-  "type": "GUEST"
+  "code": "ADMIN-87195",
+  "name": "Administrator",
+  "email": "admin@lima.com",
+  "type": "ADMIN"
 }, {
   "code": "USER-46141",
   "name": "Justin Mills",
