@@ -1,3 +1,3 @@
 <div class="">
-    <task-card ng-class="task.status" ng-repeat="task in tasks track by $index" task="task"></task-card>
+    <task-card ui-sref="task({id: task.id})" ng-class="task.status" ng-repeat="task in tasks track by $index" task="task"></task-card>
 </div>

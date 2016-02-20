@@ -28,14 +28,15 @@
     <!--</div>-->
 <!--</div>-->
 
-<div class="ui raised segment grid" ng-class="{'blue': hover}"  ng-mouseenter="hover = true" ng-mouseleave="hover = false">
+<div class="ui raised segment grid" ng-class="{'blue': hover}"
+     ng-mouseenter="hover = true" ng-mouseleave="hover = false">
 
     <div class="ten wide column">
         <h3 class="ui header">
             <a class="ui red ribbon label"></a>
             <div class="content">
-                Task title here
-                <div class="sub header"><p> Quick description</p></div>
+                {{task.code}} - {{task.name}}
+                <div class="sub header"><p>{{task.description}}</p></div>
             </div>
         </h3>
         <a class="header"></a>

@@ -4,8 +4,8 @@
             <div class="twelve wide column">
                 <h2 class="ui header">
                     <div class="content">
-                        Plug-ins
-                        <div class="sub header">Check out our plug-in marketplace</div>
+                        {{task.code}}
+                        <div class="sub header">{{task.name}}</div>
                     </div>
                 </h2>
             </div>
@@ -29,11 +29,10 @@
     </div>
     <div class="ui segment">
         <div class="ui three item menu">
-            <div class="active item">Tab</div>
-            <div class="item">Tab</div>
-            <div class="item">Tab</div>
+            <div class="active item">Description</div>
+            <div class="item">History</div>
+            <div class="item">Time Tracking</div>
         </div>
-        tab -> desc history time tracking
     </div>
     <div class="ui segment task-item-tab-content">
         <ui-view>

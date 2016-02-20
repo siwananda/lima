@@ -23,6 +23,7 @@ module.exports = function ($) {
         };
 
         $scope.project = project;
+        $scope.tasks = project.tasks;
 
 
         //Starts loader

@@ -10,36 +10,37 @@ var LimaApp = angular.module('LimaApp',
     ])
     .config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider, ENDPOINTS) {
 
+
         //$httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
 
-        $httpProvider.interceptors.push(function($q, $window, $rootScope) {
-            $rootScope.loadingScreen = jQuery('#mainLoader').hide();
-
-            return {
-                'request': function(config) {
-                    $rootScope.loadingScreen.show();
-
-                    return config || $q.when(config);
-                },
-                'response': function(response) {
-                    $rootScope.loadingScreen.hide();
-
-                    return response || $q.when(response);
-                },
-                'responseError': function(rejection) {
-                    $rootScope.loadingScreen.hide();
-
-                    // go to login screen if timeout
-                    if (rejection.status == 401) {
-                        $window.location.href = "login?timeout=true";
-
-                        return $q.reject(rejection);
-                    }
-
-                    return $q.reject(rejection);
-                }
-            };
-        });
+        //$httpProvider.interceptors.push(function($q, $window, $rootScope) {
+        //    $rootScope.loadingScreen = jQuery('#mainLoader').hide();
+        //
+        //    return {
+        //        'request': function(config) {
+        //            $rootScope.loadingScreen.show();
+        //
+        //            return config || $q.when(config);
+        //        },
+        //        'response': function(response) {
+        //            $rootScope.loadingScreen.hide();
+        //
+        //            return response || $q.when(response);
+        //        },
+        //        'responseError': function(rejection) {
+        //            $rootScope.loadingScreen.hide();
+        //
+        //            // go to login screen if timeout
+        //            if (rejection.status == 401) {
+        //                $window.location.href = "login?timeout=true";
+        //
+        //                return $q.reject(rejection);
+        //            }
+        //
+        //            return $q.reject(rejection);
+        //        }
+        //    };
+        //});
 
         $urlRouterProvider.when('', '/');
         $urlRouterProvider.otherwise('/404');
@@ -49,7 +50,7 @@ var LimaApp = angular.module('LimaApp',
                 views: {
                     'sidebar@': {
                         template: require('./components/sidebar.html'),
-                         controller: 'SidebarController'
+                        controller: 'SidebarController'
                     },
                     'header@': {
                         template: require('./components/header.html')/*,
@@ -158,7 +159,28 @@ var LimaApp = angular.module('LimaApp',
                 }
             });
 
-    });
+    })
+    .run(["$rootScope", "$state", "$location", function ($rootScope, $state, $location) {
+        $rootScope.$state = $state; // state to be accessed from view
+        $rootScope.$location = $location; // location to be accessed from view
+        $rootScope.loadingScreen = jQuery('#mainLoader');
+        $rootScope
+            .$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+                    NProgress.start();
+                    console.debug("START!! -> event(%o) | toState(%o) | fromState(%o)", event, toState, fromState);
+                    $rootScope.loadingScreen.addClass("active");
+                }
+            );
+
+        $rootScope
+            .$on('$stateChangeSuccess',
+                function (event, toState, toParams, fromState, fromParams) {
+                    NProgress.done();
+                    $rootScope.loadingScreen.removeClass("active");
+                    console.debug("FINISH!! -> event(%o) | toState(%o) | fromState(%o)", event, toState, fromState);
+                });
+    }]);
+
 
 require("./common/app-constants")(LimaApp);
 require("./common/app-entities")(LimaApp);

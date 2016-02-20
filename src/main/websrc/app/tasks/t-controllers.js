@@ -5,6 +5,7 @@ module.exports = function ($) {
 
         //do what we must
         console.log("Task detail loaded")
+        $scope.task = task;
 
     };
 

@@ -1,4 +1,5 @@
 require('./style/main.scss');
+require('nprogress-npm/nprogress.css');
 var LimaApp = require('./app/main');
 
 $(document).ready(function () {
