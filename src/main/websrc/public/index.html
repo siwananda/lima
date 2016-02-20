@@ -4,6 +4,7 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
     <meta name="description" content="Lima - Task management on overdrive"/>
+
 </head>
 <body>
 
@@ -13,8 +14,11 @@
     </div>
 </section>
 
+<div ui-view="sidebar" ng-cloak=""></div>
+<div ui-view="header" ng-cloak=""></div>
+
 <div class="main" ng-cloak="">
-MAIN APP LOADED
+    <div ui-view="content" ng-cloak=""></div>
 </div>
 
 </body>
