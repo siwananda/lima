@@ -44,7 +44,11 @@ public class TaskService extends AbstractService {
         DBObject query = QueryBuilder.start("_id").in(memberObjectId).get();
 
         return StreamSupport.stream(this.db.getCollection("tasks").find(query).spliterator(), true)
-                .map(it -> this.db.getConverter().read(Task.class, it))
+                .map(it -> {
+                    Task task = this.db.getConverter().read(Task.class, it);
+                    task = this.fetchAssignee(task);
+                    return task;
+                })
                 .collect(Collectors.toList());
 
     }
