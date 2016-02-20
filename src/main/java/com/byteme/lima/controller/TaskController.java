@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -56,4 +57,12 @@ public class TaskController {
         );
     }
 
+    @RequestMapping(
+            value = "/bootstrap",
+            method = GET,
+            produces = APPLICATION_JSON_VALUE
+    )
+    public void bootstrap() throws IOException {
+        this.taskService.bootstrap();
+    }
 }
