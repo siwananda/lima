@@ -66,7 +66,7 @@ module.exports = (function makeWebpackConfig() {
             {test: /\.html$/, loader: 'raw'}
         ],
         postLoaders: [],
-        noParse: [/.+zone\.js\/dist\/.+/, /.+angular\/.+/, /angular+\.js/]
+        noParse: [/.+zone\.js\/dist\/.+/]
     };
 
     config.plugins = [];
