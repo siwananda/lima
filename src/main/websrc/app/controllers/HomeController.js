@@ -1,21 +1,8 @@
 module.exports = function(LimaApp){
-    LimaApp.controller('HomeController', function ($scope, $stateParams, $http, $rootScope) {
+    LimaApp.controller('HomeController', function ($scope, $stateParams, projects, users) {
 
-        $scope.init = function(){
-
-            $http.get('rest/projects').then(
-                function(response){
-                    var data = response.data;
-                    if(data){
-                        $scope.projects = data;
-                    }
-                },
-                function(response){
-
-                }
-            );
-
-        };
+        $scope.projects = projects;
+        $scope.users = users;
 
     });
 };

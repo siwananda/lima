@@ -9,6 +9,11 @@
     <img src="img/projects/{{project.id}}.jpg" onerror="this.src='img/default.png'">
 </div>
 <div class="content">
+    <div class="ui mini horizontal divided list">
+        <div class="item" ng-repeat="member in members track by member.id">
+            <img class="ui avatar image" src="img/default.png">
+        </div>
+    </div>
     <div class="header">{{project.name}}</div>
     <div class="meta">
         <a>{{project.status}}</a>

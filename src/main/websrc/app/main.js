@@ -73,7 +73,16 @@ var LimaApp = angular.module('LimaApp',
                         controller: 'HomeController'
                     }
                 },
-                resolve: {}
+                resolve: {
+                    projects: function (LimaEntity) {
+                        var baseProjects = LimaEntity.all(ENDPOINTS.PROJECT_REQUEST_PATH);
+                        return baseProjects.getList();
+                    },
+                    users: function (LimaEntity) {
+                        var baseUsers = LimaEntity.all(ENDPOINTS.USER_REQUEST_PATH);
+                        return baseUsers.getList();
+                    }
+                }
             })
             .state('projects', {
                 parent: 'site',
