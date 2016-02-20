@@ -19,8 +19,8 @@ var LimaApp = angular.module('LimaApp',
                 'abstract': true,
                 views: {
                     'sidebar@': {
-                        template: require('./components/sidebar.html')/*,
-                         controller: 'SidebarController'*/
+                        template: require('./components/sidebar.html'),
+                         controller: 'SidebarController'
                     },
                     'header@': {
                         template: require('./components/header.html')/*,
@@ -132,5 +132,6 @@ var LimaApp = angular.module('LimaApp',
 require("./common/app-constants")(LimaApp);
 require("./common/app-entities")(LimaApp);
 require("./controllers/HomeController")(LimaApp);
+require("./controllers/SidebarController")(LimaApp);
 
 module.exports = LimaApp;

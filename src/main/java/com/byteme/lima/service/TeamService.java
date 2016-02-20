@@ -1,7 +1,6 @@
 package com.byteme.lima.service;
 
 import com.byteme.lima.domain.Team;
-import com.byteme.lima.domain.User;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.BasicDBObject;
@@ -78,9 +77,11 @@ public class TeamService extends AbstractService {
     public void bootstrap() throws IOException {
         this.removeAll();
 
-        List<Team> teams = new ObjectMapper().readValue(this.resourceLoader.getResource("classpath:teams.json").getFile(), new TypeReference<List<Team>>() { });
-        for (Team team: teams) {
-            this.save(team);
+        List<BasicDBObject> items = new ObjectMapper().readValue(this.resourceLoader.getResource("classpath:teams.json").getFile(), new TypeReference<List<BasicDBObject>>() {});
+        for (BasicDBObject item: items) {
+            item.put("_id", new ObjectId(item.get("id").toString()));
+            item.remove("id");
+            this.db.save(item, "teams");
         }
     }
 }

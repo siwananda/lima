@@ -1,7 +1,9 @@
 package com.byteme.lima.controller;
 
 import com.byteme.lima.domain.Project;
+import com.byteme.lima.domain.Team;
 import com.byteme.lima.service.ProjectService;
+import com.byteme.lima.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,10 +32,14 @@ public class ProjectController {
     )
     public List<Project> get(
             @RequestParam(required = false) String id,
-            @RequestParam(required = false) String code
+            @RequestParam(required = false) String code,
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) Project.Status status
     ) {
         if (id != null)     return Arrays.asList(this.projectService.findById(id));
         if (code != null)   return Arrays.asList(this.projectService.findByCode(code));
+        if (name != null)   return this.projectService.findAllByName(name);
+        if (status != null) return this.projectService.findAllByStatus(status);
 
         return this.projectService.findAll();
     }
@@ -44,7 +50,7 @@ public class ProjectController {
             produces = APPLICATION_JSON_VALUE
     )
     public Project get(@PathVariable String id) {
-        return this.projectService.findById(id);
+        return this.projectService.fetchTeam(this.projectService.findById(id));
     }
 
     @RequestMapping(

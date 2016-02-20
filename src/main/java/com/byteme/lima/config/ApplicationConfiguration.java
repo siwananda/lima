@@ -1,5 +1,6 @@
 package com.byteme.lima.config;
 
+import com.byteme.lima.JavaApp;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @Configuration
-@ComponentScan(basePackages = "com.byteme.lima")
+@ComponentScan(basePackageClasses = JavaApp.class)
 @EnableAutoConfiguration
 @EnableWebMvc
 public class ApplicationConfiguration extends WebMvcConfigurerAdapter {

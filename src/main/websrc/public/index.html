@@ -14,10 +14,11 @@
     </div>
 </section>
 
-<div ui-view="sidebar" ng-cloak=""></div>
 <div ui-view="header" ng-cloak=""></div>
 
-<div class="main-content" ng-cloak="">
+<div class="ui left vertical inverted labeled icon sidebar menu" ui-view="sidebar" ng-cloak=""></div>
+
+<div class="main-content pusher" ng-cloak="">
     <div ui-view="content" ng-cloak=""></div>
 </div>
 
