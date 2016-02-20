@@ -10,8 +10,6 @@ import com.mongodb.DBObject
 import org.bson.types.ObjectId
 import org.springframework.stereotype.Service
 
-import java.util.stream.StreamSupport
-
 @Service
 class UserService extends AbstractService {
 
