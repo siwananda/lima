@@ -23,6 +23,9 @@ public class ProjectService extends AbstractService {
     @Autowired
     public TeamService teamService;
 
+    @Autowired
+    public TaskService taskService;
+
     public List<Project> findAll() {
         return this.db.findAll(Project.class, "projects");
     }
@@ -69,6 +72,10 @@ public class ProjectService extends AbstractService {
     }
 
     public Project fetchTasks(Project project) {
+        if (project.taskIds != null) {
+            project.tasks = new ArrayList<>();
+            project.tasks.addAll(this.taskService.findAllByIds(project.taskIds));
+        }
         return project;
     }
 

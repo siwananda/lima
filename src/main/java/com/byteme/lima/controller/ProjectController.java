@@ -50,7 +50,10 @@ public class ProjectController {
             produces = APPLICATION_JSON_VALUE
     )
     public Project get(@PathVariable String id) {
-        return this.projectService.fetchTeam(this.projectService.findById(id));
+        Project project = this.projectService.findById(id);
+        project = this.projectService.fetchTasks(project);
+        project = this.projectService.fetchTeam(project);
+        return project;
     }
 
     @RequestMapping(
