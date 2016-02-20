@@ -93,4 +93,4 @@ target
 # files
 *.iml
 
-src/main/resources/static
+src/main/webapp/static
