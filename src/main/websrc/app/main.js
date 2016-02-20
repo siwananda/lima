@@ -70,10 +70,11 @@ var LimaApp = angular.module('LimaApp',
                 },
                 resolve: {
                     project: function (LimaEntity, $stateParams) {
-                        if (_.isEqual($stateParams.id, "new")) {
+                        debugger;
+                        if (_.isEqual($stateParams.projectId, "new")) {
                             return {};
                         } else {
-                            var baseProject = LimaEntity.one(ENDPOINTS.PROJECT_REQUEST_PATH, $stateParams.id);
+                            var baseProject = LimaEntity.one(ENDPOINTS.PROJECT_REQUEST_PATH, $stateParams.projectId);
                             return baseProject.get();
                         }
                     }
@@ -107,7 +108,6 @@ var LimaApp = angular.module('LimaApp',
                 },
                 resolve: {
                     task: function (LimaEntity, $stateParams) {
-                        debugger;
                         if (_.isEqual($stateParams.id, "new")) {
                             return {};
                         } else {
