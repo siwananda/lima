@@ -12,6 +12,35 @@ var LimaApp = angular.module('LimaApp',
 
         //$httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
 
+        $httpProvider.interceptors.push(function($q, $window, $rootScope) {
+            $rootScope.loadingScreen = jQuery('#mainLoader').hide();
+
+            return {
+                'request': function(config) {
+                    $rootScope.loadingScreen.show();
+
+                    return config || $q.when(config);
+                },
+                'response': function(response) {
+                    $rootScope.loadingScreen.hide();
+
+                    return response || $q.when(response);
+                },
+                'responseError': function(rejection) {
+                    $rootScope.loadingScreen.hide();
+
+                    // go to login screen if timeout
+                    if (rejection.status == 401) {
+                        $window.location.href = "login?timeout=true";
+
+                        return $q.reject(rejection);
+                    }
+
+                    return $q.reject(rejection);
+                }
+            };
+        });
+
         $urlRouterProvider.when('', '/');
         $urlRouterProvider.otherwise('/404');
 
@@ -70,7 +99,6 @@ var LimaApp = angular.module('LimaApp',
                 },
                 resolve: {
                     project: function (LimaEntity, $stateParams) {
-                        debugger;
                         if (_.isEqual($stateParams.projectId, "new")) {
                             return {};
                         } else {
