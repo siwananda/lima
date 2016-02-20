@@ -22,12 +22,11 @@ public class JavaApp extends SpringBootServletInitializer {
         SpringApplicationBuilder app = new JavaApp().configure(new SpringApplicationBuilder(JavaApp.class));
         Environment env = app.run(args).getEnvironment();
         LOG.info(
-                "\n" +
-                        "Access URLs:\n" +
-                        "----------------------------------------------------------\n" +
-                        "\tExternal: \thttp://" + InetAddress.getLocalHost().getHostAddress() + ":" + env.getProperty("server.port" ) + env.getProperty("server.context-path" ) + "\n" +
-                        "\tInternal: \thttp://localhost:" + env.getProperty("server.port" ) + env.getProperty("server.context-path" ) + "\n" +
-                        "----------------------------------------------------------"
+                "\nByteMe - LIMA:\n" +
+                "----------------------------------------------------------\n" +
+                "\tExternal: \thttp://" + InetAddress.getLocalHost().getHostAddress() + ":" + env.getProperty("server.port" ) + env.getProperty("server.context-path" ) + "\n" +
+                "\tInternal: \thttp://localhost:" + env.getProperty("server.port" ) + env.getProperty("server.context-path" ) + "\n" +
+                "----------------------------------------------------------"
         );
     }
 }

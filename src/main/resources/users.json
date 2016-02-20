@@ -1,16 +1,8 @@
-package com.byteme.lima.util
-
-interface Constants {
-    static final String APPLICATION_NAME = "Lima"
-
-    interface Bootstrap {
-        static final String USERS =
-                """
 [{
-  "code": "ADMIN-87195",
-  "name": "Administrator",
-  "email": "admin@lima.com",
-  "type": "ADMIN"
+  "code": "USER-87195",
+  "name": "Douglas Evans",
+  "email": "devans0@yelp.com",
+  "type": "GUEST"
 }, {
   "code": "USER-46141",
   "name": "Justin Mills",
@@ -57,6 +49,3 @@ interface Constants {
   "email": "jstevens9@behance.net",
   "type": "GUEST"
 }]
-"""
-    }
-}
