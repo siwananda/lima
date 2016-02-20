@@ -3,7 +3,7 @@ module.exports = function(LimaApp){
 
         return {
             restrict: 'E',
-            templateUrl: 'directives/task-card.html',
+            template: require('./task-card.html'),
             scope: {
                 task: '='
             },

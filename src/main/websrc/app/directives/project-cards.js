@@ -3,7 +3,7 @@ module.exports = function(LimaApp){
 
         return {
             restrict: 'E',
-            templateUrl: 'directives/project-cards.html',
+            template: require('./project-cards.html'),
             scope: {
                 projects: '='
             },

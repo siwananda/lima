@@ -131,7 +131,15 @@ var LimaApp = angular.module('LimaApp',
 
 require("./common/app-constants")(LimaApp);
 require("./common/app-entities")(LimaApp);
-require("./controllers/HomeController")(LimaApp);
+
+
+require("./directives/project-card")(LimaApp);
+require("./directives/project-cards")(LimaApp);
+require("./directives/task-card")(LimaApp);
+require("./directives/task-cards")(LimaApp);
+
+
 require("./controllers/SidebarController")(LimaApp);
+require("./controllers/HomeController")(LimaApp);
 
 module.exports = LimaApp;
