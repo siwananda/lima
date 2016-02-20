@@ -4,7 +4,13 @@
   "description": "The task management app",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "clean": "rimraf node_modules doc src/main/resources/static && npm cache clean",
+    "clean-install": "npm run clean && npm install",
+    "clean-start": "npm run clean && npm start",
+    "build": "rimraf src/main/resources/static && webpack --webpack-build --progress --profile --colors --display-error-details --display-cached",
+    "server": "webpack-dev-server --inline --progress --colors --display-error-details --display-cached --hot --port=3010",
+    "docs": "typedoc --options typedoc.json src/main/resources/src/app/app.ts",
+    "start": "npm run server"
   },
   "repository": {
     "type": "git",
@@ -17,8 +23,11 @@
   },
   "homepage": "https://github.com/siwananda/lima#readme",
   "devDependencies": {
+    "autoprefixer": "^6.3.3",
+    "copy-webpack-plugin": "^1.1.1",
     "css-loader": "^0.23.1",
     "exports-loader": "^0.6.3",
+    "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.8.5",
     "html-loader": "^0.4.3",
     "html-webpack-plugin": "^2.9.0",
