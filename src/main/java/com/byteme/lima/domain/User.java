@@ -9,11 +9,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "users")
 public class User extends BaseDomain {
     public String email;
+    public String avatar;
     public Type type;
 
     public enum Type {
         ADMIN,
-        USER,
-        GUEST
+        USER
     }
 }

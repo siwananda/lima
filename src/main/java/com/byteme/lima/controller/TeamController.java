@@ -48,7 +48,7 @@ public class TeamController {
             produces = APPLICATION_JSON_VALUE
     )
     public Team get(@PathVariable String id) {
-        return this.teamService.findById(id);
+        return this.teamService.fetchMembers(this.teamService.findById(id));
     }
 
     @RequestMapping(

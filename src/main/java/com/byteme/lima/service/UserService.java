@@ -81,9 +81,11 @@ public class UserService extends AbstractService {
     public void bootstrap() throws IOException {
         this.removeAll();
 
-        List<User> users = new ObjectMapper().readValue(this.resourceLoader.getResource("classpath:users.json").getFile(), new TypeReference<List<User>>() { });
-        for (User user: users) {
-            this.save(user);
+        List<BasicDBObject> items = new ObjectMapper().readValue(this.resourceLoader.getResource("classpath:users.json").getFile(), new TypeReference<List<BasicDBObject>>() {});
+        for (BasicDBObject item: items) {
+            item.put("_id", new ObjectId(item.get("id").toString()));
+            item.remove("id");
+            this.db.save(item, "users");
         }
     }
 }
