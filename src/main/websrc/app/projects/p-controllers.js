@@ -1,7 +1,7 @@
 module.exports = function ($) {
     'use strict';
 
-    var ProjectListCtrl = function ($scope, $http, $state, ENDPOINTS, projects) {
+    var ProjectListController = function ($scope, $http, $state, ENDPOINTS, projects) {
         //do what we must
         $scope.projects = projects;
 
@@ -11,7 +11,7 @@ module.exports = function ($) {
         };
     };
 
-    var ProjectDetailCtrl = function ($scope, $http, project) {
+    var ProjectController = function ($scope, $http, project) {
 
         //do what we must
         console.log("projectDetail loaded")
@@ -19,7 +19,7 @@ module.exports = function ($) {
     };
 
     return {
-        ProjectListCtrl: ['$scope', '$http', '$state', "ENDPOINTS", "projects", ProjectListCtrl],
-        ProjectDetailCtrl: ['$scope', '$http', 'project', ProjectDetailCtrl]
+        ProjectListController: ['$scope', '$http', '$state', "ENDPOINTS", "projects", ProjectListController],
+        ProjectController: ['$scope', '$http', 'project', ProjectController]
     };
 };
