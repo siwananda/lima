@@ -18,7 +18,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @EnableWebMvc
 @EnableAutoConfiguration
 class AppConfig extends WebMvcConfigurerAdapter {
-    static final Log LOG = LogFactory.getLog(WebConfig.class)
+    static final Log LOG = LogFactory.getLog(AppConfig.class)
 
     @Autowired Environment env;
 
