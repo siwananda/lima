@@ -3,10 +3,7 @@ package com.byteme.lima.controller;
 import com.byteme.lima.domain.Task;
 import com.byteme.lima.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -15,6 +12,7 @@ import java.util.List;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @RestController
 @RequestMapping("/rest/tasks")
@@ -64,5 +62,14 @@ public class TaskController {
     )
     public void bootstrap() throws IOException {
         this.taskService.bootstrap();
+    }
+
+    @RequestMapping(
+            value = "",
+            method = POST,
+            produces = APPLICATION_JSON_VALUE
+    )
+    public void post(@RequestBody Task task) throws IOException {
+        this.taskService.save(task);
     }
 }

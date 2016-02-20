@@ -10,9 +10,12 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class ProjectService extends AbstractService {
+
     public List<Project> findAll() {
         return this.db.findAll(Project.class, "projects");
     }
@@ -31,6 +34,15 @@ public class ProjectService extends AbstractService {
                         new BasicDBObject("code", code)
                 )
         );
+    }
+
+    public List<Project> findByStatus(Project.Status status) {
+        DBObject query = new BasicDBObject();
+        query.put("status", status.name());
+
+        return StreamSupport.stream(this.db.getCollection("projects").find(query).spliterator(), false)
+                .map(it -> this.db.getConverter().read(Project.class, it))
+                .collect(Collectors.toList());
     }
 
     public void remove(Project project) {

@@ -26,7 +26,7 @@ public class Project extends BaseDomain {
 
     List<Task> tasks;
 
-    enum Status {
+    public enum Status {
         BACKLOG,
         IN_PROGRESS,
         DONE

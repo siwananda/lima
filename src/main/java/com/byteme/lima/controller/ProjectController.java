@@ -3,10 +3,7 @@ package com.byteme.lima.controller;
 import com.byteme.lima.domain.Project;
 import com.byteme.lima.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -15,6 +12,7 @@ import java.util.List;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @RestController
 @RequestMapping("/rest/projects")
@@ -65,4 +63,14 @@ public class ProjectController {
     public void bootstrap() throws IOException {
         this.projectService.bootstrap();
     }
+
+    @RequestMapping(
+            value = "",
+            method = POST,
+            produces = APPLICATION_JSON_VALUE
+    )
+    public void post(@RequestBody Project project) throws IOException {
+        this.projectService.save(project);
+    }
+
 }
