@@ -54,6 +54,9 @@ var LimaApp = angular.module('LimaApp',
                     'header@': {
                         template: require('./components/header.html')/*,
                          controller: 'HeaderController'*/
+                    },
+                    'mobilemenu@': {
+                        template: require('./components/mobilemenu.html')
                     }
                 }
             })
