@@ -1,22 +1,30 @@
 package com.byteme.lima.service;
 
+import com.byteme.lima.domain.Project;
 import com.byteme.lima.domain.Task;
 import com.byteme.lima.domain.User;
+import com.byteme.lima.exception.IllegalStateException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.QueryBuilder;
+import org.apache.commons.lang3.StringUtils;
 import org.bson.types.ObjectId;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
 public class TaskService extends AbstractService {
+
+    @Autowired
+    public UserService userService;
 
     public List<Task> findAll() {
         return this.db.findAll(Task.class, "tasks");
@@ -59,6 +67,12 @@ public class TaskService extends AbstractService {
                 .collect(Collectors.toList());
     }
 
+    public Task fetchAssignee(Task task) {
+        if (StringUtils.isNotBlank(task.assigneeId)) task.assignee = this.userService.findById(task.assigneeId);
+
+        return task;
+    }
+
     public void remove(Task task) {
         this.db.remove(task, "tasks");
     }
@@ -74,12 +88,15 @@ public class TaskService extends AbstractService {
         }
     }
 
-    public void bootstrap() throws IOException {
-        this.removeAll();
+    public Task add(Task task, User user) throws IllegalStateException {
+        if (user == null) throw new IllegalStateException("user is null");
+        if (StringUtils.isBlank(user.id)) throw new IllegalStateException("user.id is null");
+        if (task == null) throw new IllegalStateException("task is null");
+        if (StringUtils.isBlank(task.id)) throw new IllegalStateException("task.id is null");
 
-        List<Task> tasks = new ObjectMapper().readValue(this.resourceLoader.getResource("classpath:tasks.json").getFile(), new TypeReference<List<Task>>() { });
-        for (Task task: tasks) {
-            this.save(task);
-        }
+        task.assigneeId = user.id;
+
+        task = this.fetchAssignee(task);
+        return task;
     }
 }
