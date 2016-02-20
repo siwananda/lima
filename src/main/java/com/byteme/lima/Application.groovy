@@ -20,7 +20,7 @@ class Application extends SpringBootServletInitializer {
         SpringApplicationBuilder app = new Application().configure(new SpringApplicationBuilder(Application.class));
         Environment env = app.run(args).getEnvironment();
         LOG.info(
-                """
+"""
 ============================================================
 ByteMe - LIMA
 ============================================================
