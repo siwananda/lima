@@ -1,5 +1,5 @@
 module.exports = function(LimaApp){
-    LimaApp.directive('projectCard', function($http) {
+    LimaApp.directive('projectCard', function($state, $http) {
 
         return {
             restrict: 'E',
@@ -8,7 +8,13 @@ module.exports = function(LimaApp){
                 project: '='
             },
             link: function(scope, element, attrs){
+                $(element).find('.image').dimmer({
+                    on: 'hover'
+                });
 
+                scope.projectDetail = function(){
+                    $state.go('project', {projectId: scope.project.id});
+                }
             }
         }
 

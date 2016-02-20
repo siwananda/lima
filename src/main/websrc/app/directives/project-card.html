@@ -1,5 +1,12 @@
-<div class="image">
-    <img src="img/projects/{{project.id}}.jpg">
+<div class="blurring dimmable image">
+    <div class="ui dimmer">
+        <div class="content">
+            <div class="center">
+                <div class="ui inverted button" ng-click="projectDetail()">Details</div>
+            </div>
+        </div>
+    </div>
+    <img src="img/projects/{{project.id}}.jpg" onerror="this.src='img/default.png'">
 </div>
 <div class="content">
     <div class="header">{{project.name}}</div>
@@ -7,7 +14,7 @@
         <a>{{project.status}}</a>
     </div>
     <div class="description">
-        {{project.description}}
+        {{project.description ? project.description : 'no description'}}
     </div>
 </div>
 <div class="extra content">
