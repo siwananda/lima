@@ -52,6 +52,15 @@ public class ProjectService extends AbstractService {
                 .collect(Collectors.toList());
     }
 
+    public List<Project> findAllByStatus(Project.Status status) {
+        DBObject query = new BasicDBObject();
+        query.put("status", status.name());
+
+        return StreamSupport.stream(this.db.getCollection("projects").find(query).spliterator(), false)
+                .map(it -> this.db.getConverter().read(Project.class, it))
+                .collect(Collectors.toList());
+    }
+
     public Project fetchTeam(Project project) {
         if (project.teamId != null) {
             project.team = this.teamService.findById(project.teamId);

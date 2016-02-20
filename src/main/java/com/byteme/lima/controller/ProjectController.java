@@ -33,11 +33,13 @@ public class ProjectController {
     public List<Project> get(
             @RequestParam(required = false) String id,
             @RequestParam(required = false) String code,
-            @RequestParam(required = false) String name
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) Project.Status status
     ) {
         if (id != null)     return Arrays.asList(this.projectService.findById(id));
         if (code != null)   return Arrays.asList(this.projectService.findByCode(code));
         if (name != null)   return this.projectService.findAllByName(name);
+        if (status != null) return this.projectService.findAllByStatus(status);
 
         return this.projectService.findAll();
     }

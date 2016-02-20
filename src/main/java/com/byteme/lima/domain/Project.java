@@ -14,8 +14,15 @@ public class Project extends BaseDomain {
     public String description;
     public Date start;
     public Date end;
+    public Status status;
 
     @Transient
     public Team team;
     public String teamId;
+
+    public enum Status {
+        BACKLOG,
+        IN_PROGRESS,
+        DONE
+    }
 }
