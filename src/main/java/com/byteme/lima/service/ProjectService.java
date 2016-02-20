@@ -68,12 +68,17 @@ public class ProjectService extends AbstractService {
         return project;
     }
 
+    public Project fetchTasks(Project project) {
+        return project;
+    }
+
     public void remove(Project project) {
         this.db.remove(project, "projects");
     }
 
-    public void save(Project project) {
+    public Project save(Project project) {
         this.db.save(project, "projects");
+        return this.findByCode(project.getCode());
     }
 
     public void removeAll() {

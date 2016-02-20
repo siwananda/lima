@@ -1,3 +1,5 @@
 <div class="ui link cards">
-    <project-card class="ui card" ng-repeat="project in projects track by $index" project="project"></project-card>
+    <div class="ui four stackable cards">
+        <project-card ng-repeat="project in projects track by $index" project="project" class="ui red fluid card"></project-card>
+    </div>
 </div>

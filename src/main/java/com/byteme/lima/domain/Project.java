@@ -6,6 +6,7 @@ import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -19,6 +20,10 @@ public class Project extends BaseDomain {
     @Transient
     public Team team;
     public String teamId;
+
+    @Transient
+    public List<Task> tasks;
+    public List<String> taskIds;
 
     public enum Status {
         BACKLOG,

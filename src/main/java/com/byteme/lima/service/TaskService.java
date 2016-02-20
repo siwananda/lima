@@ -1,10 +1,12 @@
 package com.byteme.lima.service;
 
 import com.byteme.lima.domain.Task;
+import com.byteme.lima.domain.User;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
+import com.mongodb.QueryBuilder;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,18 @@ public class TaskService extends AbstractService {
                 Task.class,
                 this.db.getCollection("tasks").findOne(new ObjectId(id))
         );
+    }
+
+    public List<Task> findAllByIds(List<String> ids) {
+        List<ObjectId> memberObjectId = ids.parallelStream()
+                .map(ObjectId::new)
+                .collect(Collectors.toList());
+        DBObject query = QueryBuilder.start("_id").in(memberObjectId).get();
+
+        return StreamSupport.stream(this.db.getCollection("tasks").find(query).spliterator(), true)
+                .map(it -> this.db.getConverter().read(Task.class, it))
+                .collect(Collectors.toList());
+
     }
 
     public Task findByCode(String code) {
@@ -49,8 +63,9 @@ public class TaskService extends AbstractService {
         this.db.remove(task, "tasks");
     }
 
-    public void save(Task task) {
+    public Task save(Task task) {
         this.db.save(task, "tasks");
+        return this.findByCode(task.getCode());
     }
 
     public void removeAll() {

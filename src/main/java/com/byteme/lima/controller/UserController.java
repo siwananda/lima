@@ -62,15 +62,6 @@ public class UserController {
     }
 
     @RequestMapping(
-            value = "/bootstrap",
-            method = GET,
-            produces = APPLICATION_JSON_VALUE
-    )
-    public void bootstrap() throws IOException {
-        this.userService.bootstrap();
-    }
-
-    @RequestMapping(
             value = "",
             method = POST,
             produces = APPLICATION_JSON_VALUE
