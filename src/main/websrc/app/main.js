@@ -18,11 +18,11 @@ var LimaApp = angular.module('LimaApp',
                 'abstract': true,
                 views: {
                     'sidebar@': {
-                        templateUrl: 'components/sidebar.html'/*,
+                        template: require('./components/sidebar.html')/*,
                          controller: 'SidebarController'*/
                     },
                     'header@': {
-                        templateUrl: 'components/header.html'/*,
+                        template: require('./components/header.html')/*,
                          controller: 'HeaderController'*/
                     }
                 }
@@ -35,7 +35,7 @@ var LimaApp = angular.module('LimaApp',
                 },
                 views: {
                     'content@': {
-                        templateUrl: 'components/home.html',
+                        template: require('./components/home.html'),
                         controller: 'HomeController'
                     }
                 },
@@ -49,7 +49,7 @@ var LimaApp = angular.module('LimaApp',
                 },
                 views: {
                     'content@': {
-                        templateUrl: 'components/projects.html',
+                        template: require('./components/projects.html'),
                         controller: 'ProjectListController'
                     }
                 },
@@ -63,7 +63,7 @@ var LimaApp = angular.module('LimaApp',
                 },
                 views: {
                     'content@': {
-                        templateUrl: 'components/project.html',
+                        template: require('./components/project.html'),
                         controller: 'ProjectController'
                     }
                 },
@@ -77,7 +77,7 @@ var LimaApp = angular.module('LimaApp',
                 },
                 views: {
                     'content@': {
-                        templateUrl: 'components/tasks.html',
+                        template: require('./components/tasks.html'),
                         controller: 'TaskListController'
                     }
                 },
@@ -91,7 +91,7 @@ var LimaApp = angular.module('LimaApp',
                 },
                 views: {
                     'content@': {
-                        templateUrl: 'components/task.html',
+                        template: require('./components/task.html'),
                         controller: 'TaskController'
                     }
                 },
@@ -102,7 +102,7 @@ var LimaApp = angular.module('LimaApp',
                 url: '/404',
                 views: {
                     'content@': {
-                        templateUrl: '404.html'
+                        template: require('./components/error404.html')
                     }
                 }
             });
