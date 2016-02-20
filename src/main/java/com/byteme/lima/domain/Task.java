@@ -12,15 +12,14 @@ import java.util.List;
 @Setter
 @Document(collection = "tasks")
 public class Task extends BaseDomain {
-    public Integer number;
     public String description;
 
     public Date start;
     public Date end;
 
     @Transient
-    public List<User> assignees;
-    public List<String> assigneeIds;
+    public User assignee;
+    public String assigneeId;
 
     public Status status;
 

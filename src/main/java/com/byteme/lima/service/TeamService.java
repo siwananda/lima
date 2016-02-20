@@ -53,15 +53,17 @@ public class TeamService extends AbstractService {
     public Team fetchMembers(Team team) {
         if (team.memberIds != null) {
             team.members = new ArrayList<>();
-            team.members.addAll(team.memberIds.stream()
-                    .map(memberId -> this.userService.findById(memberId))
-                    .collect(Collectors.toList()));
+//            team.members.addAll(team.memberIds.stream()
+//                    .map(memberId -> this.userService.findById(memberId))
+//                    .collect(Collectors.toList()));
+            team.members.addAll(this.userService.findAllByIds(team.memberIds));
         }
         return team;
     }
 
-    public void save(Team team) {
+    public Team save(Team team) {
         this.db.save(team, "teams");
+        return this.findByCode(team.getCode());
     }
 
     public void remove(Team team) {

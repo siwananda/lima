@@ -60,13 +60,4 @@ public class TeamController {
                 this.teamService.findById(id)
         );
     }
-
-    @RequestMapping(
-            value = "/bootstrap",
-            method = GET,
-            produces = APPLICATION_JSON_VALUE
-    )
-    public void bootstrap() throws IOException {
-        this.teamService.bootstrap();
-    }
 }
