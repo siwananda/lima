@@ -12,7 +12,7 @@ echo "Executing npm run build"
 npm run build
 
 echo "Bundling and Packaging"
-mvn clean package -DskipTests
+mvn clean package
 
 echo "====="
 echo " END "
