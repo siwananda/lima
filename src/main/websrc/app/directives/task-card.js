@@ -8,7 +8,7 @@ module.exports = function(LimaApp){
                 task: '='
             },
             link: function(scope, element, attrs){
-
+                $(element).find("#dueDate").calendar({type : 'date'})
             }
         }
 

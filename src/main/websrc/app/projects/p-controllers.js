@@ -19,7 +19,14 @@ module.exports = function ($) {
         console.log("projectDetail loaded");
         var _populateTeam = function (team) {
             $scope.members = team.members;
+            $("#taskList").toggleClass("loading");
         };
+
+        $scope.project = project;
+
+
+        //Starts loader
+        $("#taskList").toggleClass("loading");
         var team = LimaEntity.one(ENDPOINTS.TEAM_REQUEST_PATH, project.teamId);
         team.get().then(_populateTeam);
     };

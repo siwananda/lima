@@ -70,7 +70,6 @@ var LimaApp = angular.module('LimaApp',
                 },
                 resolve: {
                     project: function (LimaEntity, $stateParams) {
-                        debugger;
                         if (_.isEqual($stateParams.projectId, "new")) {
                             return {};
                         } else {
