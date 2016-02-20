@@ -28,12 +28,12 @@ module.exports = (function makeWebpackConfig() {
 
     config.devtool = 'source-map';
     config.entry = {
-        'vendor': './src/main/webapp/vendor.js',
-        'app': './src/main/webapp/bootstrap.js' // our angular app
+        'vendor': './src/main/websrc/vendor.js',
+        'app': './src/main/websrc/bootstrap.js' // our angular app
     };
 
     config.output = {
-        path: root('resources/static'),
+        path: root('webapp/static'),
         publicPath: '/lima/',
         filename: 'js/[name].js',
         chunkFilename: BUILD ? '[id].chunk.js?[hash]' : '[id].chunk.js'
@@ -44,8 +44,8 @@ module.exports = (function makeWebpackConfig() {
         // only discover files that have those extensions
         extensions: ['', '.js', '.json', '.css', '.scss', '.html'],
         alias: {
-            'app': 'webapp/app',
-            'common': 'webapp/common'
+            'app': 'websrc/app',
+            'common': 'websrc/common'
         }
     };
 
@@ -55,13 +55,13 @@ module.exports = (function makeWebpackConfig() {
 
             {test: /\.json$/, loader: 'json'},
 
-            {test: /\.css$/, exclude: root('webapp','app'), loader: TEST ? 'null' : ExtractTextPlugin.extract('style', 'css?sourceMap!postcss')},
+            {test: /\.css$/, exclude: root('websrc','app'), loader: TEST ? 'null' : ExtractTextPlugin.extract('style', 'css?sourceMap!postcss')},
             // all css required in src/app files will be merged in js files
-            {test: /\.css$/, include: root('webapp', 'app'), loader: 'raw!postcss'},
+            {test: /\.css$/, include: root('websrc', 'app'), loader: 'raw!postcss'},
 
-            {test: /\.scss$/, exclude: root('webapp', 'app'), loader: TEST ? 'null' : ExtractTextPlugin.extract('style', 'css?sourceMap!postcss!sass')},
+            {test: /\.scss$/, exclude: root('websrc', 'app'), loader: TEST ? 'null' : ExtractTextPlugin.extract('style', 'css?sourceMap!postcss!sass')},
             // all css required in src/app files will be merged in js files
-            {test: /\.scss$/, exclude: root('webapp', 'style'), loader: 'raw!postcss!sass'},
+            {test: /\.scss$/, exclude: root('websrc', 'style'), loader: 'raw!postcss!sass'},
 
             {test: /\.html$/, loader: 'raw'}
         ],
@@ -86,7 +86,7 @@ module.exports = (function makeWebpackConfig() {
         }),
 
         new HtmlWebpackPlugin({
-            template: './src/main/webapp/public/index.html',
+            template: './src/main/websrc/public/index.html',
             inject: 'body',
             hash: true, // inject ?hash at the end of the files
             chunksSortMode: function compare(a, b) {
@@ -128,7 +128,7 @@ module.exports = (function makeWebpackConfig() {
         // Minify all javascript, switch loaders to minimizing mode
         //new webpack.optimize.UglifyJsPlugin(),
         new CopyWebpackPlugin([{
-            from: root('webapp/public')
+            from: root('websrc/public')
         }])
     );
 
@@ -143,7 +143,7 @@ module.exports = (function makeWebpackConfig() {
     };
     config.devServer = {
         historyApiFallback: true,
-        contentBase: './src/main/webapp/public'
+        contentBase: './src/main/websrc/public'
     };
 
     return config;

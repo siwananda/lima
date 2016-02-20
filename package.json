@@ -4,12 +4,12 @@
   "description": "The task management app",
   "main": "index.js",
   "scripts": {
-    "clean": "rimraf node_modules doc src/main/resources/static && npm cache clean",
+    "clean": "rimraf node_modules doc src/main/webapp/static && npm cache clean",
+    "watch": "webpack --watch --progress --profile --colors --display-error-details --display-cached --hot",
     "clean-install": "npm run clean && npm install",
     "clean-start": "npm run clean && npm start",
-    "build": "rimraf src/main/resources/static && webpack --webpack-build --progress --profile --colors --display-error-details --display-cached",
+    "build": "rimraf src/main/webapp/static && webpack --webpack-build --progress --profile --colors --display-error-details --display-cached",
     "server": "webpack-dev-server --inline --progress --colors --display-error-details --display-cached --hot --port=3010",
-    "docs": "typedoc --options typedoc.json src/main/resources/src/app/app.ts",
     "start": "npm run server"
   },
   "repository": {
