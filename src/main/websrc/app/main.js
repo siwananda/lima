@@ -5,7 +5,8 @@ var LimaApp = angular.module('LimaApp',
         'ngSanitize',
         'ngAnimate',
         //Modules
-        require('./projects/p-app')
+        require('./projects/p-app'),
+        require('./tasks/t-app')
     ])
     .config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider, ENDPOINTS) {
 
@@ -94,7 +95,7 @@ var LimaApp = angular.module('LimaApp',
             })
             .state('task', {
                 parent: 'site',
-                url: '/task/:taskId',
+                url: '/task/:id',
                 data: {
                     authorities: []
                 },
@@ -104,7 +105,17 @@ var LimaApp = angular.module('LimaApp',
                         controller: 'TaskController'
                     }
                 },
-                resolve: {}
+                resolve: {
+                    task: function (LimaEntity, $stateParams) {
+                        debugger;
+                        if (_.isEqual($stateParams.id, "new")) {
+                            return {};
+                        } else {
+                            var baseTask = LimaEntity.one(ENDPOINTS.TASK_REQUEST_PATH, $stateParams.id);
+                            return baseTask.get();
+                        }
+                    }
+                }
             })
             .state('404', {
                 parent: 'site',

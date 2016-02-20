@@ -1,1 +1,12 @@
 @import "../vendors/semantic/semantic.min.css";
+.main-content{
+  position: absolute;
+  top:45px;
+  width: 100%;
+  padding-right: 5%;
+  padding-left: 5%;
+  overflow-y: auto;
+}
+.task-item-tab-content{
+  min-height: 600px;
+}
