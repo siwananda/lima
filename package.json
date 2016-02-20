@@ -15,5 +15,30 @@
   "bugs": {
     "url": "https://github.com/siwananda/lima/issues"
   },
-  "homepage": "https://github.com/siwananda/lima#readme"
+  "homepage": "https://github.com/siwananda/lima#readme",
+  "devDependencies": {
+    "css-loader": "^0.23.1",
+    "exports-loader": "^0.6.3",
+    "file-loader": "^0.8.5",
+    "html-loader": "^0.4.3",
+    "html-webpack-plugin": "^2.9.0",
+    "node-sass": "^3.4.2",
+    "postcss-loader": "^0.8.1",
+    "raw-loader": "^0.5.1",
+    "rimraf": "^2.5.2",
+    "style-loader": "^0.13.0",
+    "url-loader": "^0.5.7",
+    "webpack": "^1.12.13",
+    "webpack-dev-server": "^1.14.1"
+  },
+  "dependencies": {
+    "angular": "^1.5.0",
+    "angular-animate": "^1.5.0",
+    "angular-sanitize": "^1.5.0",
+    "angular-ui-router": "^0.2.18",
+    "font-awesome": "^4.5.0",
+    "jquery": "^2.2.0",
+    "lodash": "^3.10.1",
+    "restangular": "^1.5.2"
+  }
 }
