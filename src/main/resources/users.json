@@ -7,7 +7,7 @@
   "code": "USER-46141",
   "name": "Justin Mills",
   "email": "jmills1@un.org",
-  "type": "GUEST"
+  "type": "USER"
 }, {
   "code": "USER-51216",
   "name": "Nicole Washington",
@@ -32,7 +32,7 @@
   "code": "USER-45681",
   "name": "Christine James",
   "email": "cjames6@virginia.edu",
-  "type": "GUEST"
+  "type": "USER"
 }, {
   "code": "USER-81972",
   "name": "Kimberly Fernandez",
@@ -42,7 +42,7 @@
   "code": "USER-91113",
   "name": "Peter Wallace",
   "email": "pwallace8@state.tx.us",
-  "type": "GUEST"
+  "type": "USER"
 }, {
   "code": "USER-57350",
   "name": "Judy Stevens",
