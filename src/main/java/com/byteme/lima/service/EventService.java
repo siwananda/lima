@@ -108,6 +108,10 @@ public class EventService extends AbstractService {
         return this.createEvent(project, " assigned to ", team);
     }
 
+    public Event add(Project project, Task task) throws IllegalStateException {
+        return this.createEvent(project, " creates additional task: ", task);
+    }
+
     public Event assign(User user, Team team) throws IllegalStateException {
         return this.createEvent(user, " assigned to ", team);
     }
