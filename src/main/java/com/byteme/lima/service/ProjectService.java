@@ -118,6 +118,8 @@ public class ProjectService extends AbstractService {
         project.taskIds.add(task.id);
         this.save(project);
 
+        this.eventService.add(project, task);
+
         project = this.fetchTasks(project);
         return project;
     }
