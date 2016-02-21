@@ -10,26 +10,26 @@
                 </h2>
             </div>
             <!--<div class="six wide right aligned column">-->
-                <!--<h3 class="ui header">-->
-                    <!--<img src="img/female1.png">-->
-                    <!--<div class="content">-->
-                        <!--{{task.assignee.name}}-->
-                        <!--<div class="sub header">{{task.assignee.email}}</div>-->
-                    <!--</div>-->
-                <!--</h3>-->
+            <!--<h3 class="ui header">-->
+            <!--<img src="img/female1.png">-->
+            <!--<div class="content">-->
+            <!--{{task.assignee.name}}-->
+            <!--<div class="sub header">{{task.assignee.email}}</div>-->
+            <!--</div>-->
+            <!--</h3>-->
             <!--</div>-->
         </div>
     </div>
     <!--<div class="ui segment">-->
-        <!--<div class="ui grid">-->
-            <!--<div class="eight wide column">-->
-                <!--<p><strong>Start Date: </strong>{{task.startDate}}</p>-->
-                <!--<p><strong>End Date: </strong>{{task.endDate}}</p>-->
-            <!--</div>-->
-            <!--<div class="eight wide column">-->
-                <!--<div class="ui right floated button">{{task.status}}</div>-->
-            <!--</div>-->
-        <!--</div>-->
+    <!--<div class="ui grid">-->
+    <!--<div class="eight wide column">-->
+    <!--<p><strong>Start Date: </strong>{{task.startDate}}</p>-->
+    <!--<p><strong>End Date: </strong>{{task.endDate}}</p>-->
+    <!--</div>-->
+    <!--<div class="eight wide column">-->
+    <!--<div class="ui right floated button">{{task.status}}</div>-->
+    <!--</div>-->
+    <!--</div>-->
     <!--</div>-->
     <div class="ui segment">
         <div class="ui three item menu">
@@ -44,23 +44,67 @@
                 <table class="ui blue table">
                     <thead>
                     <tr>
-                        <th>Attribute</th>
-                        <th>Value</th>
+                        <th colspan="2">
+                            Properties
+                        </th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
                         <td><strong>Start Date: </strong></td>
-                        <td>{{task.startDate}}</td>
+                        <td>
+                            <div class="ui grid">
+                                <div class="ten wide column">
+                                    <p class="task-start-date">{{task.startDate}}</p>
+                                </div>
+                                <div class="six wide column">
+                                    <div class="ui calendar" id="startDate">
+                                        <div class="ui mini button">
+                                            <i class="calendar icon"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
                     </tr>
                     <tr>
                         <td><strong>End Date: </strong></td>
-                        <td>{{task.endDate}}</td>
+                        <td>
+                            <div class="ui grid">
+                                <div class="ten wide column">
+                                    <p class="task-end-date"> {{task.endDate}}</p>
+                                </div>
+                                <div class="six wide column">
+                                    <div class="ui calendar" id="endDate">
+                                        <div class="ui mini button">
+                                            <i class="calendar icon"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
                     </tr>
                     <tr>
                         <td><strong>Workflow Status: </strong></td>
                         <td>
-                            <div class="ui blue button">{{task.status}}</div>
+                            <div data-value="{{task.status}}" class="ui fluid dropdown button task-status"
+                                 ng-class="buttonColor">
+                                <span class="text">{{task.statusLabel}}</span>
+                                <div class="menu">
+                                    <div data-value="BACKLOG" class="gray item">
+                                        Pending
+                                    </div>
+                                    <div data-value="IN_PROGRESS" class="blue item">
+                                        Started
+                                    </div>
+                                    <div data-value="DONE" class="green item">
+                                        Completed
+                                    </div>
+                                    <div data-value="OBSOLETE" class="red item">
+                                        Obsolete
+                                    </div>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                     <tr>
@@ -74,17 +118,6 @@
                     </tr>
                     </tbody>
                 </table>
-                <!---->
-                <!--<p>{{task.startDate}}</p>-->
-                <!--<p>{{task.endDate}}</p>-->
-                <!--<div class="ui right floated button">{{task.status}}</div>-->
-                <!--<h3 class="ui header">-->
-                <!--<img src="img/female1.png">-->
-                <!--<div class="content">-->
-                <!--{{task.assignee.name}}-->
-                <!--<div class="sub header">{{task.assignee.email}}</div>-->
-                <!--</div>-->
-                <!--</h3>-->
             </div>
             <div class="ui eleven wide column">
                 <ui-view>

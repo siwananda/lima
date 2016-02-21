@@ -9,7 +9,7 @@ module.exports = function (LimaApp) {
             },
             link: function (scope, element, attrs) {
 
-                var _grabFuckingColor = function(value){
+                var _grabMildColor = function(value){
                     return STATUSES[value].color;
                 };
 
@@ -30,13 +30,13 @@ module.exports = function (LimaApp) {
                     $(element).find(".task-status").addClass("loading");
                     scope.task.status = value;
                     _saveTask(scope.task, function (response) {
-                        var newColor = scope.buttonColor = _grabFuckingColor(response.status);
+                        var newColor = scope.buttonColor = _grabMildColor(response.status);
                         $(element).find(".task-status").removeClass("blue gray red green loading");
                         $(element).find(".task-status").addClass(newColor);
                     });
                 };
 
-                scope.buttonColor = _grabFuckingColor(scope.task.status);
+                scope.buttonColor = _grabMildColor(scope.task.status);
 
                 //Init calendar and formats it
                 $(element).find("#dueDate").calendar({
