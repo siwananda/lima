@@ -24,6 +24,18 @@ public class EventService extends AbstractService {
     @Autowired
     public BootstrapService bootstrapService;
 
+    @Autowired
+    public ProjectService projectService;
+
+    @Autowired
+    public TaskService taskService;
+
+    @Autowired
+    public TeamService teamService;
+
+    @Autowired
+    public UserService userService;
+
     public List<Event> findAllByIds(List<String> ids) {
         if (ids != null && !CollectionUtils.isEmpty(ids)) {
             List<ObjectId> objectIds = ids.parallelStream()
@@ -49,6 +61,16 @@ public class EventService extends AbstractService {
         return null;
     }
 
+    public List<Event> findByTask(Task task) {
+        if (task != null && task.historyIds != null && !CollectionUtils.isEmpty(task.historyIds)) {
+            task.history = new ArrayList<>();
+            task.history.addAll(this.findAllByIds(task.historyIds));
+            return task.history;
+        }
+
+        return null;
+    }
+
     public Event findByCode(String code) {
         return this.db.getConverter().read(
                 Event.class,
@@ -66,6 +88,10 @@ public class EventService extends AbstractService {
         return this.createEvent(project, " assigned to ", team);
     }
 
+    public Event assign(User user, Team team) throws IllegalStateException {
+        return this.createEvent(user, " assigned to ", team);
+    }
+
     public Event createEvent(BaseDomain source, String message, BaseDomain target) throws IllegalStateException {
         if (source == null || source.id == null || StringUtils.isBlank(source.id)) throw new IllegalStateException("source is empty");
         if (target == null || target.id == null || StringUtils.isBlank(target.id)) throw new IllegalStateException("target is empty");
@@ -78,6 +104,8 @@ public class EventService extends AbstractService {
 
         this.db.save(event, "events");
         event = this.findByCode(event.getCode());
+
+        this.saveSource(source, event);
 
         return event;
     }
@@ -94,19 +122,17 @@ public class EventService extends AbstractService {
         this.db.save(event, "events");
         event = this.findByCode(event.getCode());
 
+        this.saveSource(source, event);
+
         return event;
     }
 
-    public Event createEvent(String message) throws IllegalStateException {
-        Integer id = this.bootstrapService.next();
-        Event event = new Event();
-        event.code = "Event-" + id;
-        event.name = message;
-        event.timestamp = new Date();
+    public void saveSource(BaseDomain source, Event event) {
+        source.addEvent(event);
 
-        this.db.save(event, "events");
-        event = this.findByCode(event.getCode());
-
-        return event;
+        if (source instanceof Project)  this.projectService.save((Project) source);
+        if (source instanceof Task)     this.taskService.save((Task) source);
+        if (source instanceof Team)     this.teamService.save((Team) source);
+        if (source instanceof User)     this.userService.save((User) source);
     }
 }
