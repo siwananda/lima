@@ -76,7 +76,7 @@ public class ProjectController {
     }
 
     @RequestMapping(
-            value = "/",
+            value = "",
             method = DELETE,
             produces = APPLICATION_JSON_VALUE)
     public void deleteAll() {
