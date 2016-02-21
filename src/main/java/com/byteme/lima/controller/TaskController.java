@@ -1,6 +1,5 @@
 package com.byteme.lima.controller;
 
-import com.byteme.lima.domain.Project;
 import com.byteme.lima.domain.Task;
 import com.byteme.lima.domain.User;
 import com.byteme.lima.exception.IllegalStateException;
@@ -66,6 +65,14 @@ public class TaskController {
 
     @RequestMapping(
             value = "",
+            method = DELETE,
+            produces = APPLICATION_JSON_VALUE)
+    public void deleteAll() {
+        this.taskService.removeAll();
+    }
+
+    @RequestMapping(
+            value = "",
             method = POST,
             produces = APPLICATION_JSON_VALUE
     )
@@ -88,6 +95,23 @@ public class TaskController {
         if (_user == null) throw new NotFoundException("user not found with id: " + user);
 
         return this.taskService.add(_task, _user);
+    }
+
+    @RequestMapping(
+            value = "{task}/user/{user}",
+            method = DELETE,
+            produces = APPLICATION_JSON_VALUE)
+    public Task unAssign(
+            @PathVariable String task,
+            @PathVariable String user
+    ) throws IllegalStateException, NotFoundException {
+        Task _task = this.taskService.findById(task);
+        if (_task == null) throw new NotFoundException("task not found with id: " + task);
+
+        User _user = this.userService.findById(user);
+        if (_user == null) throw new NotFoundException("user not found with id: " + user);
+
+        return this.taskService.remove(_task, _user);
     }
 
     @RequestMapping(

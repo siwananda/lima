@@ -113,6 +113,16 @@ public class TaskService extends AbstractService {
         return task;
     }
 
+    public Task remove(Task task, User user) throws IllegalStateException {
+        if (user == null) throw new IllegalStateException("user is null");
+        if (StringUtils.isBlank(user.id)) throw new IllegalStateException("user.id is null");
+        if (task == null) throw new IllegalStateException("task is null");
+        if (StringUtils.isBlank(task.id)) throw new IllegalStateException("task.id is null");
+
+        task.assigneeId = null;
+        return task;
+    }
+
     public List<Task> fetchDue(Long dueDays) throws IllegalStateException {
         return this.fetchDueByUser(null, dueDays);
     }

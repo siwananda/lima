@@ -1,4 +1,4 @@
-module.exports = function ($) {
+module.exports = function (LimaApp) {
     'use strict';
 
     var ProjectListController = function ($scope, $http, $state, ENDPOINTS, projects) {
@@ -36,8 +36,7 @@ module.exports = function ($) {
         team.get().then(_populateTeam);
     };
 
-    return {
-        ProjectListController: ['$scope', '$http', '$state', "ENDPOINTS", "projects", ProjectListController],
-        ProjectController: ['$scope', '$http', 'project', 'ENDPOINTS', 'LimaEntity', ProjectController]
-    };
+    LimaApp
+        .controller('ProjectListController', ['$scope', '$http', '$state', "ENDPOINTS", "projects", ProjectListController])
+        .controller('ProjectController', ['$scope', '$http', 'project', 'ENDPOINTS', 'LimaEntity', ProjectController]);
 };
