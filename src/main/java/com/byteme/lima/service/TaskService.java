@@ -4,7 +4,6 @@ import com.byteme.lima.domain.Task;
 import com.byteme.lima.domain.User;
 import com.byteme.lima.exception.IllegalStateException;
 import com.mongodb.BasicDBObject;
-import com.mongodb.BasicDBObjectBuilder;
 import com.mongodb.DBObject;
 import com.mongodb.QueryBuilder;
 import org.apache.commons.lang3.StringUtils;
@@ -12,10 +11,8 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -35,15 +32,6 @@ public class TaskService extends AbstractService {
                 Task.class,
                 this.db.getCollection("tasks").findOne(new ObjectId(id))
         );
-    }
-
-    public List<Task> findAllByAssignee(String id) {
-        DBObject query = new BasicDBObject();
-        query.put("assigneeId", id);
-
-        return StreamSupport.stream(this.db.getCollection("tasks").find(query).spliterator(), false)
-                .map(it -> this.db.getConverter().read(Task.class, it))
-                .collect(Collectors.toList());
     }
 
     public List<Task> findAllByIds(List<String> ids) {
