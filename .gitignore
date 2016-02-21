@@ -93,4 +93,5 @@ target
 # files
 *.iml
 
+/src/test/java/com/byteme/lima/JonathanTest.java
 src/main/webapp/static
