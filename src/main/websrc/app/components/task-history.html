@@ -1,0 +1,12 @@
+<div class="ui feed">
+    <div class="event" ng-repeat="event in events track by event.id">
+        <div class="content">
+            <div class="summary">
+                {{event.code}}
+            </div>
+            <div class="meta">
+                {{event.name}}
+            </div>
+        </div>
+    </div>
+</div>

@@ -98,6 +98,60 @@ var LimaApp = angular.module('LimaApp',
                     }
                 }
             })
+            .state('task.description', {
+                url: '/description',
+                data: {
+                    authorities: []
+                },
+                template: require('./components/task-description.html'),
+                controller: 'TaskDescriptionController',
+                resolve: {
+                    task: function (LimaEntity, $stateParams) {
+                        if (_.isEqual($stateParams.id, "new")) {
+                            return {};
+                        } else {
+                            var baseTask = LimaEntity.one(ENDPOINTS.TASK_REQUEST_PATH, $stateParams.id);
+                            return baseTask.get();
+                        }
+                    }
+                }
+            })
+            .state('task.history', {
+                url: '/history',
+                data: {
+                    authorities: []
+                },
+                template: require('./components/task-history.html'),
+                controller: 'TaskHistoryController',
+                resolve: {
+                    task: function (LimaEntity, $stateParams) {
+                        if (_.isEqual($stateParams.id, "new")) {
+                            return {};
+                        } else {
+                            var baseTask = LimaEntity.one(ENDPOINTS.TASK_REQUEST_PATH, $stateParams.id);
+                            return baseTask.get();
+                        }
+                    }
+                }
+            })
+            .state('task.timetrack', {
+                url: '/timetrack',
+                data: {
+                    authorities: []
+                },
+                template: require('./components/task-timetrack.html'),
+                controller: 'TaskTimeTrackController',
+                resolve: {
+                    task: function (LimaEntity, $stateParams) {
+                        if (_.isEqual($stateParams.id, "new")) {
+                            return {};
+                        } else {
+                            var baseTask = LimaEntity.one(ENDPOINTS.TASK_REQUEST_PATH, $stateParams.id);
+                            return baseTask.get();
+                        }
+                    }
+                }
+            })
             .state('404', {
                 parent: 'site',
                 url: '/404',

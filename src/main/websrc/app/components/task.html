@@ -1,7 +1,7 @@
 <div class="ui segments">
     <div class="ui segment">
         <div class="ui grid">
-            <div class="twelve wide column">
+            <div class="ten wide column">
                 <h2 class="ui header">
                     <div class="content">
                         {{task.code}}
@@ -9,32 +9,87 @@
                     </div>
                 </h2>
             </div>
-            <div class="four wide column">
-                <h2 class="ui header">
-                    <img src="/images/avatar2/large/patrick.png" class="ui circular image">
-                    Patrick
-                </h2>
-            </div>
+            <!--<div class="six wide right aligned column">-->
+                <!--<h3 class="ui header">-->
+                    <!--<img src="img/female1.png">-->
+                    <!--<div class="content">-->
+                        <!--{{task.assignee.name}}-->
+                        <!--<div class="sub header">{{task.assignee.email}}</div>-->
+                    <!--</div>-->
+                <!--</h3>-->
+            <!--</div>-->
         </div>
     </div>
-    <div class="ui segment">
-        <div class="ui grid">
-            <div class="eight wide column">
-                Tanggalan
-            </div>
-            <div class="eight wide column">
-                status label
-            </div>
-        </div>
-    </div>
+    <!--<div class="ui segment">-->
+        <!--<div class="ui grid">-->
+            <!--<div class="eight wide column">-->
+                <!--<p><strong>Start Date: </strong>{{task.startDate}}</p>-->
+                <!--<p><strong>End Date: </strong>{{task.endDate}}</p>-->
+            <!--</div>-->
+            <!--<div class="eight wide column">-->
+                <!--<div class="ui right floated button">{{task.status}}</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
     <div class="ui segment">
         <div class="ui three item menu">
-            <div class="active item">Description</div>
-            <div class="item">History</div>
-            <div class="item">Time Tracking</div>
+            <div ui-sref="task.description" ui-sref-active="active" class="active item">Description</div>
+            <div ui-sref="task.history" ui-sref-active="active" class="item">History</div>
+            <div ui-sref="task.timetrack" ui-sref-active="active" class="item">Time Tracking</div>
         </div>
     </div>
     <div class="ui segment task-item-tab-content">
-        <ui-view>
+        <div class="ui grid">
+            <div class="ui five wide column">
+                <table class="ui blue table">
+                    <thead>
+                    <tr>
+                        <th>Attribute</th>
+                        <th>Value</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><strong>Start Date: </strong></td>
+                        <td>{{task.startDate}}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>End Date: </strong></td>
+                        <td>{{task.endDate}}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Workflow Status: </strong></td>
+                        <td>
+                            <div class="ui blue button">{{task.status}}</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Assignee: </strong></td>
+                        <td>
+                            <a class="ui image label">
+                                <img src="img/female1.png">
+                                {{task.assignee.email}}
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <!---->
+                <!--<p>{{task.startDate}}</p>-->
+                <!--<p>{{task.endDate}}</p>-->
+                <!--<div class="ui right floated button">{{task.status}}</div>-->
+                <!--<h3 class="ui header">-->
+                <!--<img src="img/female1.png">-->
+                <!--<div class="content">-->
+                <!--{{task.assignee.name}}-->
+                <!--<div class="sub header">{{task.assignee.email}}</div>-->
+                <!--</div>-->
+                <!--</h3>-->
+            </div>
+            <div class="ui eleven wide column">
+                <ui-view>
+            </div>
+        </div>
+
     </div>
 </div>
