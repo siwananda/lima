@@ -22,6 +22,7 @@ module.exports = function (LimaApp) {
             name: 'name here',
             description: 'descripion here'
         };
+        $scope.taskSubmitLoader = $('#taskSubmitLoader').hide();
 
         //do what we must
         console.log("projectDetail loaded");
@@ -42,10 +43,7 @@ module.exports = function (LimaApp) {
         team.get().then(_populateTeam);
 
         $scope.addTask = function(){
-            $scope.newTask = {
-                name: 'name here',
-                description: 'descripion here'
-            };
+            $scope.newTask = {};
         };
 
         $scope.submitTask = function(){
@@ -53,9 +51,15 @@ module.exports = function (LimaApp) {
             $scope.newTask.end = $('#txtTaskEnd').val();
 
             var taskObject = _.extend(LimaEntity.one(ENDPOINTS.TASK_REQUEST_PATH), $scope.newTask);
-            taskObject.save().then(function(response){
-                var data = response.data;
-                debugger;
+            taskObject.save().then(function(task){
+                $scope.newTask = task;
+
+                $scope.project.one(ENDPOINTS.TASK_REQUEST_PATH, task.id).put().then(function(project){
+                    $scope.tasks = project.tasks;
+                    $('#addTaskModal').modal('hide');
+
+                    $scope.taskSubmitLoader.hide();
+                });
             });
 
         };
@@ -67,7 +71,9 @@ module.exports = function (LimaApp) {
                     $scope.newTask = undefined;
                 },
                 onApprove : function() {
+                    $scope.taskSubmitLoader.show();
                     $scope.submitTask();
+                    return false;
                 }
             })
             .modal('attach events', '.add-task-btn', 'show')
@@ -75,12 +81,24 @@ module.exports = function (LimaApp) {
 
         $('#taskStart').calendar({
             type: 'date',
-            endCalendar: $('#taskEnd')
+            endCalendar: $('#taskEnd'),
+            formatter: {
+                date: function (date, settings) {
+                    if (!date) return '';
+                    return moment(date).format("YYYY-MM-DD");
+                }
+            }
         });
 
         $('#taskEnd').calendar({
             type: 'date',
-            startCalendar: $('#taskStart')
+            startCalendar: $('#taskStart'),
+            formatter: {
+                date: function (date, settings) {
+                    if (!date) return '';
+                    return moment(date).format("YYYY-MM-DD");
+                }
+            }
         });
 
 

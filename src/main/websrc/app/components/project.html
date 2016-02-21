@@ -10,20 +10,14 @@
                 </h2>
             </div>
             <div class="four wide column">
-                <h2 class="ui header">
-                    <img src="/images/avatar2/large/patrick.png" class="ui circular image">
-                    Patrick
-                </h2>
-            </div>
-        </div>
-        <div class="content">
-            <div class="ui right labeled button" tabindex="0">
-                <div class="add-task-btn ui blue button" ng-click="addTask()">
-                    <i class="plus icon"></i> Add Task
+                <div class="ui right labeled button" tabindex="0">
+                    <div class="add-task-btn ui blue button" ng-click="addTask()">
+                        <i class="plus icon"></i> Add Task
+                    </div>
+                    <a class="ui basic blue left pointing label">
+                        {{project.tasks?project.tasks.length:0}} tasks
+                    </a>
                 </div>
-                <a class="ui basic blue left pointing label">
-                    {{project.tasks?project.tasks.length:0}} tasks
-                </a>
             </div>
         </div>
     </div>
@@ -64,6 +58,9 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div id="taskSubmitLoader" class="ui active inverted dimmer">
+            <div class="ui text loader">Loading</div>
         </div>
     </div>
     <div class="actions">
