@@ -3,10 +3,7 @@ var LimaApp = angular.module('LimaApp',
         require('angular-ui-router'),
         'restangular',
         'ngSanitize',
-        'ngAnimate',
-        //Modules
-        require('./projects/p-app'),
-        require('./tasks/t-app')
+        'ngAnimate'
     ])
     .config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider, ENDPOINTS) {
 
@@ -203,5 +200,8 @@ require("./directives/task-cards")(LimaApp);
 
 require("./controllers/SidebarController")(LimaApp);
 require("./controllers/HomeController")(LimaApp);
+require("./controllers/ProjectController")(LimaApp);
+require("./controllers/TaskController")(LimaApp);
+
 
 module.exports = LimaApp;

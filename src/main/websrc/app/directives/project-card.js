@@ -9,8 +9,13 @@ module.exports = function (LimaApp) {
             },
             link: function (scope, element, attrs) {
 
+                scope.members = [];
+                scope.tasks = [];
+
+                scope.tasks = _.isEmpty(scope.project.taskIds)?[]:scope.project.taskIds;
+
                 var _populateTeam = function (team) {
-                    scope.members = _.take(team.members, 10);
+                    scope.members = team.members;
                 };
 
                 var team = LimaEntity.one(ENDPOINTS.TEAM_REQUEST_PATH, scope.project.teamId);
