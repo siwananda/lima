@@ -7,6 +7,7 @@ import com.byteme.lima.exception.NotFoundException;
 import com.byteme.lima.service.TaskService;
 import com.byteme.lima.service.UserService;
 import com.byteme.lima.util.Constants;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -74,9 +75,21 @@ public class TaskController {
     @RequestMapping(
             value = "",
             method = POST,
-            produces = APPLICATION_JSON_VALUE
+            produces = APPLICATION_JSON_VALUE,
+            consumes = APPLICATION_JSON_VALUE
     )
-    public Task post(@RequestBody Task task) throws IOException {
+    public Task post(@RequestBody Task task) throws IOException, IllegalStateException {
+        if (StringUtils.isNotBlank(task.id)) throw new IllegalStateException("task.id is present");
+        return this.taskService.save(task);
+    }
+
+    @RequestMapping(
+            value = "/{id}",
+            method = PUT,
+            produces = APPLICATION_JSON_VALUE,
+            consumes = APPLICATION_JSON_VALUE
+    )
+    public Task post(@PathVariable String id, @RequestBody Task task) throws IOException {
         return this.taskService.save(task);
     }
 
