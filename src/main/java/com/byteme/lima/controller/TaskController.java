@@ -35,10 +35,12 @@ public class TaskController {
     )
     public List<Task> get(
             @RequestParam(required = false) String id,
-            @RequestParam(required = false) String code
+            @RequestParam(required = false) String code,
+            @RequestParam(required = false) String user
     ) {
         if (id != null)     return Arrays.asList(this.taskService.findById(id));
         if (code != null)   return Arrays.asList(this.taskService.findByCode(code));
+        if (user != null)   return this.taskService.findAllByAssignee(user);
 
         return this.taskService.findAll();
     }

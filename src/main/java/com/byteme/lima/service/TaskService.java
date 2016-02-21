@@ -1,11 +1,8 @@
 package com.byteme.lima.service;
 
-import com.byteme.lima.domain.Project;
 import com.byteme.lima.domain.Task;
 import com.byteme.lima.domain.User;
 import com.byteme.lima.exception.IllegalStateException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.BasicDBObject;
 import com.mongodb.BasicDBObjectBuilder;
 import com.mongodb.DBObject;
@@ -78,7 +75,7 @@ public class TaskService extends AbstractService {
         DBObject query = new BasicDBObject();
         query.put("status", status.name());
 
-        return StreamSupport.stream(this.db.getCollection("tasks").find(query).spliterator(), false)
+        return StreamSupport.stream(this.db.getCollection("tasks").find(query).spliterator(), true)
                 .map(it -> this.db.getConverter().read(Task.class, it))
                 .collect(Collectors.toList());
     }
@@ -87,6 +84,18 @@ public class TaskService extends AbstractService {
         if (StringUtils.isNotBlank(task.assigneeId)) task.assignee = this.userService.findById(task.assigneeId);
 
         return task;
+    }
+
+    public List<Task> findAllByAssignee(String userId) {
+        if (StringUtils.isNoneBlank(userId)) {
+            DBObject query = new BasicDBObject();
+            query.put("assigneeId", userId);
+
+            return StreamSupport.stream(this.db.getCollection("tasks").find(query).spliterator(), true)
+                    .map(it -> this.db.getConverter().read(Task.class, it))
+                    .collect(Collectors.toList());
+        }
+        return Collections.emptyList();
     }
 
     public void remove(Task task) {
@@ -99,7 +108,7 @@ public class TaskService extends AbstractService {
     }
 
     public void removeAll() {
-        for (DBObject task: this.db.getCollection("tasks").find()) {
+        for (DBObject task : this.db.getCollection("tasks").find()) {
             this.db.remove(task, "tasks");
         }
     }
