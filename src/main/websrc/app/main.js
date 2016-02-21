@@ -167,6 +167,7 @@ require("./directives/project-card")(LimaApp);
 require("./directives/project-cards")(LimaApp);
 require("./directives/task-card")(LimaApp);
 require("./directives/task-cards")(LimaApp);
+require("./directives/submission-modal")(LimaApp);
 
 
 require("./controllers/SidebarController")(LimaApp);
