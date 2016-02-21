@@ -1,9 +1,6 @@
 package com.byteme.lima.service;
 
-import com.byteme.lima.domain.Project;
-import com.byteme.lima.domain.Task;
-import com.byteme.lima.domain.Team;
-import com.byteme.lima.domain.User;
+import com.byteme.lima.domain.*;
 import com.byteme.lima.exception.IllegalStateException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,6 +21,9 @@ import java.util.stream.StreamSupport;
 
 @Service
 public class ProjectService extends AbstractService {
+
+    @Autowired
+    public EventService eventService;
 
     @Autowired
     public TeamService teamService;
@@ -80,6 +80,14 @@ public class ProjectService extends AbstractService {
         if (project.taskIds != null) {
             project.tasks = new ArrayList<>();
             project.tasks.addAll(this.taskService.findAllByIds(project.taskIds));
+        }
+        return project;
+    }
+
+    public Project fetchHistory(Project project) {
+        if (project.historyIds != null) {
+            project.history = new ArrayList<>();
+            project.history.addAll(this.eventService.findAllByIds(project.historyIds));
         }
         return project;
     }
