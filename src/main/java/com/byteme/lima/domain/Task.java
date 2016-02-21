@@ -25,6 +25,7 @@ public class Task extends BaseDomain {
     public enum Status {
         BACKLOG,
         IN_PROGRESS,
-        DONE
+        DONE,
+        OBSOLETE
     }
 }
