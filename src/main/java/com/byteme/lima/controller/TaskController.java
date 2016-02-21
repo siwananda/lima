@@ -7,6 +7,7 @@ import com.byteme.lima.exception.IllegalStateException;
 import com.byteme.lima.exception.NotFoundException;
 import com.byteme.lima.service.TaskService;
 import com.byteme.lima.service.UserService;
+import com.byteme.lima.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -85,5 +86,26 @@ public class TaskController {
         if (_user == null) throw new NotFoundException("user not found with id: " + user);
 
         return this.taskService.add(_task, _user);
+    }
+
+    @RequestMapping(
+            value = "/due",
+            method = GET,
+            produces = APPLICATION_JSON_VALUE
+    )
+    public List<Task> fetchDue() throws IllegalStateException, NotFoundException {
+        return this.taskService.fetchDue(Constants.Dates.DUE_DAYS);
+    }
+
+    @RequestMapping(
+            value = "/due/{user}",
+            method = GET,
+            produces = APPLICATION_JSON_VALUE
+    )
+    public List<Task> fetchDue(@PathVariable String user) throws IllegalStateException, NotFoundException {
+        User _user = this.userService.findById(user);
+        if (_user == null) throw new NotFoundException("user not found with id: " + user);
+
+        return this.taskService.fetchDueByUser(_user, Constants.Dates.DUE_DAYS);
     }
 }

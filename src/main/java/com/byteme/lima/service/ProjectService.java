@@ -3,6 +3,7 @@ package com.byteme.lima.service;
 import com.byteme.lima.domain.Project;
 import com.byteme.lima.domain.Task;
 import com.byteme.lima.domain.Team;
+import com.byteme.lima.domain.User;
 import com.byteme.lima.exception.IllegalStateException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,6 +17,7 @@ import org.springframework.util.Assert;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -109,5 +111,24 @@ public class ProjectService extends AbstractService {
 
         project = this.fetchTasks(project);
         return project;
+    }
+
+    public List<Task> fetchDue(Long dueDays) throws IllegalStateException {
+        return this.fetchDueByTeam(null, dueDays);
+    }
+
+    public List<Task> fetchDueByTeam(Team team, Long dueDays) throws IllegalStateException {
+        Calendar start = Calendar.getInstance();
+        Calendar end = Calendar.getInstance();
+        start.add(Calendar.DATE, dueDays.intValue() * -1);
+
+        DBObject query = new BasicDBObject();
+        if (team != null)
+            query.put("teamId", team.id);
+        query.put("end", new BasicDBObject("$gte", start.getTime()).append("$lte", end.getTime()));
+
+        return StreamSupport.stream(this.db.getCollection("projects").find(query).spliterator(), false)
+                .map(it -> this.db.getConverter().read(Task.class, it))
+                .collect(Collectors.toList());
     }
 }

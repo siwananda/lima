@@ -7,6 +7,7 @@ import com.byteme.lima.exception.IllegalStateException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.BasicDBObject;
+import com.mongodb.BasicDBObjectBuilder;
 import com.mongodb.DBObject;
 import com.mongodb.QueryBuilder;
 import org.apache.commons.lang3.StringUtils;
@@ -16,6 +17,8 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -35,6 +38,15 @@ public class TaskService extends AbstractService {
                 Task.class,
                 this.db.getCollection("tasks").findOne(new ObjectId(id))
         );
+    }
+
+    public List<Task> findAllByAssignee(String id) {
+        DBObject query = new BasicDBObject();
+        query.put("assigneeId", id);
+
+        return StreamSupport.stream(this.db.getCollection("tasks").find(query).spliterator(), false)
+                .map(it -> this.db.getConverter().read(Task.class, it))
+                .collect(Collectors.toList());
     }
 
     public List<Task> findAllByIds(List<String> ids) {
@@ -62,7 +74,7 @@ public class TaskService extends AbstractService {
         );
     }
 
-    public List<Task> findByStatus(Task.Status status) {
+    public List<Task> findAllByStatus(Task.Status status) {
         DBObject query = new BasicDBObject();
         query.put("status", status.name());
 
@@ -102,5 +114,24 @@ public class TaskService extends AbstractService {
 
         task = this.fetchAssignee(task);
         return task;
+    }
+
+    public List<Task> fetchDue(Long dueDays) throws IllegalStateException {
+        return this.fetchDueByUser(null, dueDays);
+    }
+
+    public List<Task> fetchDueByUser(User user, Long dueDays) throws IllegalStateException {
+        Calendar start = Calendar.getInstance();
+        Calendar end = Calendar.getInstance();
+        start.add(Calendar.DATE, dueDays.intValue() * -1);
+
+        DBObject query = new BasicDBObject();
+        if (user != null)
+            query.put("assigneeId", user.id);
+        query.put("end", new BasicDBObject("$gte", start.getTime()).append("$lte", end.getTime()));
+
+        return StreamSupport.stream(this.db.getCollection("tasks").find(query).spliterator(), false)
+                .map(it -> this.db.getConverter().read(Task.class, it))
+                .collect(Collectors.toList());
     }
 }

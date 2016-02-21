@@ -3,11 +3,14 @@ package com.byteme.lima.controller;
 import com.byteme.lima.domain.Project;
 import com.byteme.lima.domain.Task;
 import com.byteme.lima.domain.Team;
+import com.byteme.lima.domain.User;
 import com.byteme.lima.exception.IllegalStateException;
 import com.byteme.lima.exception.NotFoundException;
 import com.byteme.lima.service.ProjectService;
 import com.byteme.lima.service.TaskService;
 import com.byteme.lima.service.TeamService;
+import com.byteme.lima.service.UserService;
+import com.byteme.lima.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +35,9 @@ public class ProjectController {
 
     @Autowired
     public TaskService taskService;
+
+    @Autowired
+    public TeamService teamService;
 
     @RequestMapping(
             value = "",
@@ -89,5 +95,26 @@ public class ProjectController {
         if (_task == null) throw new NotFoundException("task not found with id: " + task);
 
         return this.projectService.add(_project, _task);
+    }
+
+    @RequestMapping(
+            value = "/due",
+            method = GET,
+            produces = APPLICATION_JSON_VALUE
+    )
+    public List<Task> fetchDue() throws IllegalStateException, NotFoundException {
+        return this.projectService.fetchDue(Constants.Dates.DUE_DAYS);
+    }
+
+    @RequestMapping(
+            value = "/due/{team}",
+            method = GET,
+            produces = APPLICATION_JSON_VALUE
+    )
+    public List<Task> fetchDue(@PathVariable String team) throws IllegalStateException, NotFoundException {
+        Team _team = this.teamService.findById(team);
+        if (_team == null) throw new NotFoundException("team not found with id: " + team);
+
+        return this.projectService.fetchDueByTeam(_team, Constants.Dates.DUE_DAYS);
     }
 }
