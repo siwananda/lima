@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -91,6 +92,8 @@ public class TaskService extends AbstractService {
     }
 
     public Task save(Task task) {
+        if (StringUtils.isBlank(task.code)) task.code = "Task-" + UUID.randomUUID().toString();
+
         this.db.save(task, "tasks");
         return this.findByCode(task.getCode());
     }
