@@ -80,6 +80,9 @@ public class TaskController {
     )
     public Task post(@RequestBody Task task) throws IOException, IllegalStateException {
         if (StringUtils.isNotBlank(task.id)) throw new IllegalStateException("task.id is present");
+
+        if (task.status == null) task.setStatus(Task.Status.BACKLOG);
+
         return this.taskService.save(task);
     }
 
