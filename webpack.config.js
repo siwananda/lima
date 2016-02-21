@@ -55,11 +55,19 @@ module.exports = (function makeWebpackConfig() {
 
             {test: /\.json$/, loader: 'json'},
 
-            {test: /\.css$/, exclude: root('websrc','app'), loader: TEST ? 'null' : ExtractTextPlugin.extract('style', 'css?sourceMap!postcss')},
+            {
+                test: /\.css$/,
+                exclude: root('websrc', 'app'),
+                loader: TEST ? 'null' : ExtractTextPlugin.extract('style', 'css?sourceMap!postcss')
+            },
             // all css required in src/app files will be merged in js files
             {test: /\.css$/, include: root('websrc', 'app'), loader: 'raw!postcss'},
 
-            {test: /\.scss$/, exclude: root('websrc', 'app'), loader: TEST ? 'null' : ExtractTextPlugin.extract('style', 'css?sourceMap!postcss!sass')},
+            {
+                test: /\.scss$/,
+                exclude: root('websrc', 'app'),
+                loader: TEST ? 'null' : ExtractTextPlugin.extract('style', 'css?sourceMap!postcss!sass')
+            },
             // all css required in src/app files will be merged in js files
             {test: /\.scss$/, exclude: root('websrc', 'style'), loader: 'raw!postcss!sass'},
 
@@ -71,6 +79,15 @@ module.exports = (function makeWebpackConfig() {
 
     config.plugins = [];
     config.debug = true;
+
+    config.externals = {
+        // require("jquery") is external and available
+        //  on the global var jQuery
+        "jquery": "jQuery",
+        "angular": "angular",
+        "restangular": "angular",
+        "moment": "moment"
+    };
 
     config.plugins.push(
         new webpack.optimize.CommonsChunkPlugin({
@@ -91,15 +108,15 @@ module.exports = (function makeWebpackConfig() {
             hash: true, // inject ?hash at the end of the files
             chunksSortMode: function compare(a, b) {
                 // common always first
-                if(a.names[0] === 'common') {
+                if (a.names[0] === 'common') {
                     return -1;
                 }
                 // app always last
-                if(a.names[0] === 'app') {
+                if (a.names[0] === 'app') {
                     return 1;
                 }
                 // vendor before app
-                if(a.names[0] === 'vendor' && b.names[0] === 'app') {
+                if (a.names[0] === 'vendor' && b.names[0] === 'app') {
                     return -1;
                 } else {
                     return 1;
@@ -108,14 +125,14 @@ module.exports = (function makeWebpackConfig() {
                 return 0;
             }
         }),
-        new ExtractTextPlugin('css/[name].css', {disable: false}),
+        new ExtractTextPlugin('css/[name].css', {disable: false})
 
         // jQuery
-        new ProvidePlugin({
-            jQuery: 'jquery',
-            $: 'jquery',
-            jquery: 'jquery'
-        })
+        //new ProvidePlugin({
+        //    jQuery: 'jquery',
+        //    $: 'jquery',
+        //    jquery: 'jquery'
+        //})
     );
 
 

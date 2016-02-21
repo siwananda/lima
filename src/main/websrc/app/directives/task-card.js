@@ -8,7 +8,16 @@ module.exports = function(LimaApp){
                 task: '='
             },
             link: function(scope, element, attrs){
-                $(element).find("#dueDate").calendar({type : 'date'})
+                //Init calendar and formats it
+                $(element).find("#dueDate").calendar({
+                    type : 'date',
+                    formatter: {
+                        date: function (date, settings) {
+                            if (!date) return '';
+                            return moment(date).format("MMMM DD, YYYY");
+                        }
+                    }
+                });
             }
         }
 

@@ -25,6 +25,10 @@ public class Project extends BaseDomain {
     public List<Task> tasks;
     public List<String> taskIds;
 
+    @Transient
+    public List<Comment> comments;
+    public List<String> commentIds;
+
     public enum Status {
         BACKLOG,
         IN_PROGRESS,
