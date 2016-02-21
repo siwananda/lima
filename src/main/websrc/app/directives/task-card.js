@@ -23,9 +23,9 @@ module.exports = function (LimaApp) {
                 };
 
                 var _saveStatus = function (value, text, $choice) {
+                    $(element).find(".task-status").addClass("loading");
                     scope.task.status = value;
                     _saveTask(scope.task, function (response) {
-                        $(element).find(".task-status").removeClass("blue gray red green");
                         var newColor = "gray";
                         switch(value){
                             case "BACKLOG":
@@ -41,6 +41,7 @@ module.exports = function (LimaApp) {
                             default:
                                 newColor = "red";
                         }
+                        $(element).find(".task-status").removeClass("blue gray red green loading");
                         $(element).find(".task-status").addClass(newColor);
                     });
                 };
