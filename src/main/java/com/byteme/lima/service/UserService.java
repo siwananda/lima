@@ -7,12 +7,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.QueryBuilder;
+import org.apache.commons.lang3.StringUtils;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -79,6 +81,8 @@ public class UserService extends AbstractService {
     }
 
     public User save(User user) {
+        if (StringUtils.isBlank(user.code)) user.code = "User-" + UUID.randomUUID().toString();
+
         this.db.save(user, "users");
         return this.findByCode(user.getCode());
     }

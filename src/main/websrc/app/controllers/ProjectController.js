@@ -18,6 +18,11 @@ module.exports = function (LimaApp) {
         //Init real
         $scope.members = [];
         $scope.tasks = [];
+        $scope.newTask = {
+            name: 'name here',
+            description: 'descripion here'
+        };
+        $scope.taskSubmitLoader = $('#taskSubmitLoader').hide();
 
         //do what we must
         console.log("projectDetail loaded");
@@ -36,6 +41,67 @@ module.exports = function (LimaApp) {
         $("#taskList").toggleClass("loading");
         var team = LimaEntity.one(ENDPOINTS.TEAM_REQUEST_PATH, project.teamId);
         team.get().then(_populateTeam);
+
+        $scope.addTask = function(){
+            $scope.newTask = {};
+        };
+
+        $scope.submitTask = function(){
+            $scope.newTask.start = $('#txtTaskStart').val();
+            $scope.newTask.end = $('#txtTaskEnd').val();
+
+            var taskObject = _.extend(LimaEntity.one(ENDPOINTS.TASK_REQUEST_PATH), $scope.newTask);
+            taskObject.save().then(function(task){
+                $scope.newTask = task;
+
+                $scope.project.one(ENDPOINTS.TASK_REQUEST_PATH, task.id).put().then(function(project){
+                    $scope.tasks = project.tasks;
+                    $('#addTaskModal').modal('hide');
+
+                    $scope.taskSubmitLoader.hide();
+                });
+            });
+
+        };
+
+        $('#addTaskModal')
+            .modal({
+                closable  : false,
+                onDeny    : function(){
+                    $scope.newTask = undefined;
+                },
+                onApprove : function() {
+                    $scope.taskSubmitLoader.show();
+                    $scope.submitTask();
+                    return false;
+                }
+            })
+            .modal('attach events', '.add-task-btn', 'show')
+        ;
+
+        $('#taskStart').calendar({
+            type: 'date',
+            endCalendar: $('#taskEnd'),
+            formatter: {
+                date: function (date, settings) {
+                    if (!date) return '';
+                    return moment(date).format("YYYY-MM-DD");
+                }
+            }
+        });
+
+        $('#taskEnd').calendar({
+            type: 'date',
+            startCalendar: $('#taskStart'),
+            formatter: {
+                date: function (date, settings) {
+                    if (!date) return '';
+                    return moment(date).format("YYYY-MM-DD");
+                }
+            }
+        });
+
+
     };
 
     LimaApp

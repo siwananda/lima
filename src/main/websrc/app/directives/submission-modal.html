@@ -1,0 +1,10 @@
+<div id="{{modalId}}" class="ui modal" after-render="afterRender">
+    <div class="header">{{title}}</div>
+    <div class="content" ng-transclude>
+
+    </div>
+    <div class="actions">
+        <div class="ui approve button" ng-click="onSubmit()">Submit</div>
+        <div class="ui cancel button" ng-click="onCancel()">Cancel</div>
+    </div>
+</div>
