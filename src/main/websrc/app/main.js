@@ -52,20 +52,6 @@ var LimaApp = angular.module('LimaApp',
                     }
                 }
             })
-            .state('projects', {
-                parent: 'site',
-                url: '/projects',
-                data: {
-                    authorities: []
-                },
-                views: {
-                    'content@': {
-                        template: require('./components/projects.html'),
-                        controller: 'ProjectListController'
-                    }
-                },
-                resolve: {}
-            })
             .state('project', {
                 parent: 'site',
                 url: '/project/:projectId',
@@ -88,20 +74,6 @@ var LimaApp = angular.module('LimaApp',
                         }
                     }
                 }
-            })
-            .state('tasks', {
-                parent: 'site',
-                url: '/project/:projectId/tasks',
-                data: {
-                    authorities: []
-                },
-                views: {
-                    'content@': {
-                        template: require('./components/tasks.html'),
-                        controller: 'TaskListController'
-                    }
-                },
-                resolve: {}
             })
             .state('task', {
                 parent: 'site',

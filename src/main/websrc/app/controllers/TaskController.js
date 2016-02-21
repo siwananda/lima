@@ -3,9 +3,12 @@ module.exports = function (LimaApp) {
 
     var TaskController = function ($scope, $http, task) {
 
+        var originalTask = task;
+
         //do what we must
         console.log("Task detail loaded");
-        $scope.task = task;
+
+        $scope.task = _.extend(task, {endDate: moment(task.end).format("MMMM DD, YYYY")})
 
     };
 

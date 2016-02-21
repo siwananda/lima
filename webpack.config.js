@@ -85,7 +85,8 @@ module.exports = (function makeWebpackConfig() {
         //  on the global var jQuery
         "jquery": "jQuery",
         "angular": "angular",
-        "restangular": "angular"
+        "restangular": "angular",
+        "moment": "moment"
     };
 
     config.plugins.push(

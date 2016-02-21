@@ -27,7 +27,9 @@ module.exports = function (LimaApp) {
         };
 
         $scope.project = project;
-        $scope.tasks = _.isEmpty(project.tasks)?[]:project.tasks;
+        $scope.tasks = _.isEmpty(project.tasks)?[]: _.map(project.tasks, function(task){
+            return _.extend(task, {endDate: moment(task.end).format("MMMM DD, YYYY")})
+        });
 
 
         //Starts loader
