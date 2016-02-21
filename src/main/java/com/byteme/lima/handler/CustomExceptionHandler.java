@@ -2,6 +2,7 @@ package com.byteme.lima.handler;
 
 import com.byteme.lima.domain.CustomResponse;
 import com.byteme.lima.exception.NotFoundException;
+import com.byteme.lima.exception.TeapotException;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -22,14 +23,16 @@ import java.io.IOException;
 public class CustomExceptionHandler {
     public static final Log LOG = LogFactory.getLog(CustomExceptionHandler.class);
 
-    @ExceptionHandler(
-            value = {
-                    NotFoundException.class
-            }
-    )
+    @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public CustomResponse handle404(HttpServletRequest request, Throwable throwable) {
         return this.handle(HttpStatus.NOT_FOUND, request, throwable, true);
+    }
+
+    @ExceptionHandler(TeapotException.class)
+    @ResponseStatus(HttpStatus.I_AM_A_TEAPOT)
+    public CustomResponse handle418(HttpServletRequest request, Throwable throwable) {
+        return this.handle(HttpStatus.I_AM_A_TEAPOT, request, throwable, false);
     }
 
     @ExceptionHandler(

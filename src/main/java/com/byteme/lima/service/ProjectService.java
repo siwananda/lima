@@ -116,6 +116,7 @@ public class ProjectService extends AbstractService {
         if (project.taskIds == null) project.taskIds = new ArrayList<>();
 
         project.taskIds.add(task.id);
+        this.save(project);
 
         project = this.fetchTasks(project);
         return project;
