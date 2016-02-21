@@ -84,7 +84,7 @@ public class ProjectController {
     }
 
     @RequestMapping(
-            value = "{project}/task/{task}",
+            value = "{project}/tasks/{task}",
             method = PUT,
             produces = APPLICATION_JSON_VALUE)
     public Project addTask(
