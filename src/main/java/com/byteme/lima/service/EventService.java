@@ -71,6 +71,26 @@ public class EventService extends AbstractService {
         return null;
     }
 
+    public List<Event> findByTeam(Team team) {
+        if (team != null && team.historyIds != null && !CollectionUtils.isEmpty(team.historyIds)) {
+            team.history = new ArrayList<>();
+            team.history.addAll(this.findAllByIds(team.historyIds));
+            return team.history;
+        }
+
+        return null;
+    }
+
+    public List<Event> findByUser(User user) {
+        if (user != null && user.historyIds != null && !CollectionUtils.isEmpty(user.historyIds)) {
+            user.history = new ArrayList<>();
+            user.history.addAll(this.findAllByIds(user.historyIds));
+            return user.history;
+        }
+
+        return null;
+    }
+
     public Event findByCode(String code) {
         return this.db.getConverter().read(
                 Event.class,
