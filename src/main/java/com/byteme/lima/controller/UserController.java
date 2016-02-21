@@ -63,6 +63,14 @@ public class UserController {
 
     @RequestMapping(
             value = "",
+            method = DELETE,
+            produces = APPLICATION_JSON_VALUE)
+    public void deleteAll() {
+        this.userService.removeAll();
+    }
+
+    @RequestMapping(
+            value = "",
             method = POST,
             produces = APPLICATION_JSON_VALUE
     )
