@@ -98,6 +98,23 @@ public class ProjectController {
     }
 
     @RequestMapping(
+            value = "{project}/task/{task}",
+            method = DELETE,
+            produces = APPLICATION_JSON_VALUE)
+    public Project removeTask(
+            @PathVariable String project,
+            @PathVariable String task
+    ) throws IllegalStateException, NotFoundException {
+        Project _project = this.projectService.findById(project);
+        if (_project == null) throw new NotFoundException("project not found with id: " + project);
+
+        Task _task = this.taskService.findById(task);
+        if (_task == null) throw new NotFoundException("task not found with id: " + task);
+
+        return this.projectService.remove(_project, _task);
+    }
+
+    @RequestMapping(
             value = "/due",
             method = GET,
             produces = APPLICATION_JSON_VALUE

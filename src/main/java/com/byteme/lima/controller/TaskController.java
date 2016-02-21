@@ -91,6 +91,23 @@ public class TaskController {
     }
 
     @RequestMapping(
+            value = "{task}/user/{user}",
+            method = DELETE,
+            produces = APPLICATION_JSON_VALUE)
+    public Task unAssign(
+            @PathVariable String task,
+            @PathVariable String user
+    ) throws IllegalStateException, NotFoundException {
+        Task _task = this.taskService.findById(task);
+        if (_task == null) throw new NotFoundException("task not found with id: " + task);
+
+        User _user = this.userService.findById(user);
+        if (_user == null) throw new NotFoundException("user not found with id: " + user);
+
+        return this.taskService.remove(_task, _user);
+    }
+
+    @RequestMapping(
             value = "/due",
             method = GET,
             produces = APPLICATION_JSON_VALUE

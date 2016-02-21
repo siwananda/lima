@@ -113,6 +113,19 @@ public class ProjectService extends AbstractService {
         return project;
     }
 
+    public Project remove(Project project, Task task) throws IllegalStateException {
+        if (project == null) throw new IllegalStateException("project is null");
+        if (StringUtils.isBlank(project.id)) throw new IllegalStateException("project.id is null");
+        if (task == null) throw new IllegalStateException("task is null");
+        if (StringUtils.isBlank(task.id)) throw new IllegalStateException("task.id is null");
+        if (project.taskIds == null) throw new IllegalStateException("task is null");
+        if (project.taskIds.isEmpty()) throw new IllegalStateException("taskIds is empty");
+
+        project.taskIds.remove(task.id);
+        if (!project.taskIds.isEmpty()) project = this.fetchTasks(project);
+        return project;
+    }
+
     public List<Task> fetchDue(Long dueDays) throws IllegalStateException {
         return this.fetchDueByTeam(null, dueDays);
     }
