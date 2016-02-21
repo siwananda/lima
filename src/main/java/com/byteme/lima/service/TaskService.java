@@ -44,7 +44,7 @@ public class TaskService extends AbstractService {
         return StreamSupport.stream(this.db.getCollection("tasks").find(query).spliterator(), true)
                 .map(it -> {
                     Task task = this.db.getConverter().read(Task.class, it);
-                    task = this.fetchAssignee(task);
+//                    task = this.fetchAssignee(task);
                     return task;
                 })
                 .collect(Collectors.toList());
@@ -70,7 +70,9 @@ public class TaskService extends AbstractService {
     }
 
     public Task fetchAssignee(Task task) {
+        long start = System.currentTimeMillis();
         if (StringUtils.isNotBlank(task.assigneeId)) task.assignee = this.userService.findById(task.assigneeId);
+        System.out.println(" >> fetchAssignee" + (System.currentTimeMillis() - start));
 
         return task;
     }
