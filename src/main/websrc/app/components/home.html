@@ -1,7 +1,66 @@
 <div>
-    <h2 class="ui center aligned icon header" style="margin: 20px 0 40px 0;">
-        <i class="circular wizard icon"></i>
-        Project Cards
-    </h2>
+    <div class="ui grid" style="margin: 40px 0 40px 0">
+        <div class="twelve wide column">
+            <h2 class="ui header">
+                <i class="cubes icon"></i>
+                <div class="content">
+                    Projects
+                </div>
+            </h2>
+        </div>
+        <div class="four wide column">
+            <div class="ui right labeled button" tabindex="0">
+                <div class="add-project-btn ui blue button" ng-click="addProject()">
+                    <i class="plus icon"></i> Add Project
+                </div>
+                <a class="ui basic blue left pointing label">
+                    {{projects.length}} Projects
+                </a>
+            </div>
+        </div>
+    </div>
     <project-cards projects="projects"></project-cards>
+</div>
+
+<div id="addProjectModal" class="ui modal">
+    <div class="header">Add Project</div>
+    <div class="content">
+        <div class="ui form">
+            <div class="field">
+                <label>Name</label>
+                <input name="name" type="text" ng-model="newProject.name">
+            </div>
+            <div class="field">
+                <label>Description</label>
+                <textarea name="description" ng-model="newProject.description"></textarea>
+            </div>
+            <div class="two fields">
+                <div class="field">
+                    <label>Start date</label>
+                    <div class="ui calendar" id="projectStart">
+                        <div class="ui input left icon">
+                            <i class="calendar icon"></i>
+                            <input type="text" placeholder="Start" ng-model="newProject.start" id="txtProjectStart">
+                        </div>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>End date</label>
+                    <div class="ui calendar" id="projectEnd">
+                        <div class="ui input left icon">
+                            <i class="calendar icon"></i>
+                            <input type="text" placeholder="End" ng-model="newProject.end" id="txtProjectEnd">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="projectSubmitLoader" class="ui active inverted dimmer">
+            <div class="ui text loader">Loading</div>
+        </div>
+    </div>
+    <div class="actions">
+        <div class="ui approve button">Submit</div>
+        <div class="ui cancel button">Cancel</div>
+    </div>
 </div>
