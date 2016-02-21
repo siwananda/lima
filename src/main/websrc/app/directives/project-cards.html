@@ -1,5 +1,5 @@
 <div class="ui link cards">
     <div class="ui four stackable cards">
-        <project-card ng-repeat="project in projects track by $index" project="project" class="ui red fluid card"></project-card>
+        <project-card ui-sref="project({projectId: project.id})" ng-repeat="project in projects track by $index" project="project" class="ui red fluid card"></project-card>
     </div>
 </div>
