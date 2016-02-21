@@ -1,16 +1,13 @@
 package com.byteme.lima.controller;
 
 import com.byteme.lima.domain.Team;
-import com.byteme.lima.domain.User;
 import com.byteme.lima.service.TeamService;
-import com.byteme.lima.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -59,5 +56,13 @@ public class TeamController {
         this.teamService.remove(
                 this.teamService.findById(id)
         );
+    }
+
+    @RequestMapping(
+            value = "",
+            method = DELETE,
+            produces = APPLICATION_JSON_VALUE)
+    public void deleteAll() {
+        this.teamService.removeAll();
     }
 }

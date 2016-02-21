@@ -1,6 +1,5 @@
 package com.byteme.lima.controller;
 
-import com.byteme.lima.domain.Project;
 import com.byteme.lima.domain.Task;
 import com.byteme.lima.domain.User;
 import com.byteme.lima.exception.IllegalStateException;
@@ -62,6 +61,14 @@ public class TaskController {
         this.taskService.remove(
                 this.taskService.findById(id)
         );
+    }
+
+    @RequestMapping(
+            value = "",
+            method = DELETE,
+            produces = APPLICATION_JSON_VALUE)
+    public void deleteAll() {
+        this.taskService.removeAll();
     }
 
     @RequestMapping(
