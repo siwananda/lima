@@ -9,12 +9,11 @@ import com.byteme.lima.service.ProjectService;
 import com.byteme.lima.service.TaskService;
 import com.byteme.lima.service.TeamService;
 import com.byteme.lima.util.Constants;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -63,6 +62,27 @@ public class ProjectController {
         project = this.projectService.fetchTasks(project);
         project = this.projectService.fetchTeam(project);
         return project;
+    }
+
+    @RequestMapping(
+            value = "",
+            method = POST,
+            produces = APPLICATION_JSON_VALUE,
+            consumes = APPLICATION_JSON_VALUE
+    )
+    public Project post(@RequestBody Project project) throws IOException, IllegalStateException {
+        if (StringUtils.isNotBlank(project.id)) throw new IllegalStateException("project.id is present");
+        return this.projectService.save(project);
+    }
+
+    @RequestMapping(
+            value = "/{id}",
+            method = PUT,
+            produces = APPLICATION_JSON_VALUE,
+            consumes = APPLICATION_JSON_VALUE
+    )
+    public Project post(@PathVariable String id, @RequestBody Project project) throws IOException {
+        return this.projectService.save(project);
     }
 
     @RequestMapping(
