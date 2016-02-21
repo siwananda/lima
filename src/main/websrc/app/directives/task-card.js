@@ -1,5 +1,5 @@
 module.exports = function (LimaApp) {
-    LimaApp.directive('taskCard', function (LimaEntity, ENDPOINTS) {
+    LimaApp.directive('taskCard', function (LimaEntity, ENDPOINTS, STATUSES) {
 
         return {
             restrict: 'E',
@@ -8,6 +8,10 @@ module.exports = function (LimaApp) {
                 task: '='
             },
             link: function (scope, element, attrs) {
+
+                var _grabFuckingColor = function(value){
+                    return STATUSES[value].color;
+                };
 
                 var _saveTask = function (task, callback) {
                     var baseTask = _.extend(LimaEntity.one(ENDPOINTS.TASK_REQUEST_PATH), task);
@@ -26,25 +30,13 @@ module.exports = function (LimaApp) {
                     $(element).find(".task-status").addClass("loading");
                     scope.task.status = value;
                     _saveTask(scope.task, function (response) {
-                        var newColor = "gray";
-                        switch(value){
-                            case "BACKLOG":
-                                newColor = "gray";
-                                break;
-                            case "IN_PROGRESS":
-                                newColor = "blue";
-                                break;
-                            case "DONE":
-                                newColor = "green";
-                                break;
-                            case "OBSOLETE":
-                            default:
-                                newColor = "red";
-                        }
+                        var newColor = scope.buttonColor = _grabFuckingColor(response.status);
                         $(element).find(".task-status").removeClass("blue gray red green loading");
                         $(element).find(".task-status").addClass(newColor);
                     });
                 };
+
+                scope.buttonColor = _grabFuckingColor(scope.task.status);
 
                 //Init calendar and formats it
                 $(element).find("#dueDate").calendar({

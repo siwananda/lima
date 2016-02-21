@@ -24,8 +24,8 @@
         </div>
     </div>
     <div class="two wide column middle aligned content">
-        <div class="ui fluid dropdown blue button task-status">
-            <span class="text">Started</span>
+        <div data-value="{{task.status}}" class="ui fluid dropdown button task-status" ng-class="buttonColor">
+            <span class="text">{{task.statusLabel}}</span>
             <div class="menu">
                 <div data-value="BACKLOG" class="gray item">
                     Pending

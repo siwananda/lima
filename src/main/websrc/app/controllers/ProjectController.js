@@ -13,7 +13,7 @@ module.exports = function (LimaApp) {
         };
     };
 
-    var ProjectController = function ($scope, $http, project, ENDPOINTS, LimaEntity) {
+    var ProjectController = function ($scope, $http, project, ENDPOINTS, STATUSES, LimaEntity) {
 
         //Init real
         $scope.members = [];
@@ -33,7 +33,10 @@ module.exports = function (LimaApp) {
 
         $scope.project = project;
         $scope.tasks = _.isEmpty(project.tasks)?[]: _.map(project.tasks, function(task){
-            return _.extend(task, {endDate: moment(task.end).format("MMMM DD, YYYY")})
+            return _.extend(task, {
+                endDate: moment(task.end).format("MMMM DD, YYYY"),
+                statusLabel: STATUSES[task.status].label
+            })
         });
 
 
@@ -106,5 +109,5 @@ module.exports = function (LimaApp) {
 
     LimaApp
         .controller('ProjectListController', ['$scope', '$http', '$state', "ENDPOINTS", "projects", ProjectListController])
-        .controller('ProjectController', ['$scope', '$http', 'project', 'ENDPOINTS', 'LimaEntity', ProjectController]);
+        .controller('ProjectController', ['$scope', '$http', 'project', 'ENDPOINTS', 'STATUSES', 'LimaEntity', ProjectController]);
 };

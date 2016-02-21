@@ -10,8 +10,16 @@ module.exports = function (LimaApp) {
 
     };
 
+    var STATUSES = {
+        BACKLOG: {value: "BACKLOG", label: "Pending", color:"gray"},
+        IN_PROGRESS: {value: "IN_PROGRESS", label: "Started", color:"teal"},
+        DONE: {value: "DONE", label: "Completed", color:"green"},
+        OBSOLETE: {value: "OBSOLETE", label: "Obsolete", color:"red"}
+    };
+
     LimaApp
         .constant('ENDPOINTS', ENDPOINTS)
+        .constant('STATUSES', STATUSES)
     ;
 
     return LimaApp;
