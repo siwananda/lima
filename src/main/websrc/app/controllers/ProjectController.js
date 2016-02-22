@@ -74,8 +74,12 @@ module.exports = function (LimaApp) {
                     $scope.newTask = undefined;
                 },
                 onApprove : function() {
-                    $scope.taskSubmitLoader.show();
-                    $scope.submitTask();
+                    if($('#addTaskForm').form('is valid')){
+                        $scope.taskSubmitLoader.show();
+                        $scope.submitTask();
+                    }else {
+                        $('#addTaskForm').form('validate form')
+                    }
                     return false;
                 }
             })
@@ -104,6 +108,23 @@ module.exports = function (LimaApp) {
             }
         });
 
+        $('#addTaskForm')
+            .form(
+                {
+                    fields: {
+                        name: {
+                            identifier: 'name',
+                            rules: [
+                                {
+                                    type   : 'empty',
+                                    prompt : 'Please enter task name'
+                                }
+                            ]
+                        }
+                    }
+                }
+            )
+        ;
 
     };
 
