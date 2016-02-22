@@ -12,8 +12,18 @@
         <a class="header"></a>
     </div>
     <div class="one wide column middle aligned content">
-        <img class="ui mini circular image" ng-src="{{task.assignee.avatar}}"
-             onerror="this.src='img/default.png'">
+        <div class="ui floating dropdown" id="assignee">
+            <img class="ui mini circular image" ng-src="{{task.assignee.avatar}}"
+                 onerror="this.src='img/default.png'">
+            <div class="menu">
+                <div class="item">
+                    <img class="ui mini circular image" ng-src="{{task.assignee.avatar}}"
+                         onerror="this.src='img/default.png'">
+                </div>
+            </div>
+        </div>
+
+
     </div>
     <div class="three wide column middle aligned content">
         <div class="ui fluid calendar" id="dueDate">
