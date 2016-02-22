@@ -87,9 +87,27 @@ module.exports = function (LimaApp) {
 
     };
 
-    var TaskDescriptionController = function ($scope, $state, $stateParams, task) {
+    var TaskDescriptionController = function ($scope, $state, $stateParams, LimaEntity, ENDPOINTS, task) {
         console.log("Description detail loaded here");
 
+        $scope.edit = false;
+
+        $scope.startEdit = function(){
+            $scope.edit = true;
+        };
+
+        var _saveTask = function (task, callback) {
+            var baseTask = _.extend(LimaEntity.one(ENDPOINTS.TASK_REQUEST_PATH), task);
+            baseTask.put().then(_.isFunction(callback) ? callback : function (response) {
+                console.log("task saved %o", response)
+            })
+        };
+
+        $scope.saveDesc = function(task){
+            _saveTask(task, function(){
+                $scope.edit=false;
+            })
+        }
     };
 
     var TaskHistoryController = function ($scope, $state, $stateParams, LimaEntity, ENDPOINTS, task) {
@@ -106,7 +124,7 @@ module.exports = function (LimaApp) {
 
     LimaApp.controller('TaskController', ['$scope', '$element', '$state', '$stateParams', 'LimaEntity', 'ENDPOINTS',
         'STATUSES', 'task', TaskController])
-        .controller('TaskDescriptionController', ['$scope', '$state', '$stateParams', 'task', TaskDescriptionController])
+        .controller('TaskDescriptionController', ['$scope', '$state', '$stateParams', 'LimaEntity', 'ENDPOINTS', 'task', TaskDescriptionController])
         .controller('TaskHistoryController', ['$scope', '$state', '$stateParams', 'LimaEntity', 'ENDPOINTS', 'task', TaskHistoryController])
         .controller('TaskTimeTrackController', ['$scope', '$state', '$stateParams', 'task', TaskTimeTrackController]);
 };

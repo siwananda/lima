@@ -2,8 +2,10 @@ var LimaApp = angular.module('LimaApp',
     [
         require('angular-ui-router'),
         'restangular',
-        'ngSanitize',
-        'ngAnimate'
+        'ngAnimate',
+        //require('textangular/dist/textAngular-rangy.min'),
+        //require('textangular/dist/textAngular-sanitize.min'),
+        'textAngular'
     ])
     .config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider, ENDPOINTS) {
 

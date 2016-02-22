@@ -1,9 +1,14 @@
 <div>
-    <button class="ui labeled icon button">
-        <i class="configure icon"></i>
-        Edit
-    </button>
-    <p>
-        {{task.description}}
-    </p>
+    <div ng-hide="edit">
+        <div ta-bind ng-model="task.description"  ng-hide="edit" ></div>
+        <button class="ui labeled icon button" ng-click="edit=true">
+            <i class="edit icon"></i>Edit
+        </button>
+    </div>
+    <div ng-hide="!edit">
+        <div text-angular text-angular-name="task-description-editor" ng-model="task.description" ng-hide="!edit"></div>
+        <button class="ui labeled icon button" ng-click="saveDesc(task)">
+            <i class="save icon"></i>Save
+        </button>
+    </div>
 </div>

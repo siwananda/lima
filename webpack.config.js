@@ -86,6 +86,7 @@ module.exports = (function makeWebpackConfig() {
         "jquery": "jQuery",
         "angular": "angular",
         "restangular": "angular",
+        "textangular": "angular",
         "moment": "moment"
     };
 
