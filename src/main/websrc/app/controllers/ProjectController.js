@@ -5,8 +5,6 @@ module.exports = function (LimaApp) {
         //do what we must
         $scope.projects = projects;
 
-
-
         //Opens detail of clicked Project
         $scope.openDetail = function (projectId) {
             $state.go("projects.detail", {id: projectId});
