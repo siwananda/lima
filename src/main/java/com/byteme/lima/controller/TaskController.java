@@ -150,16 +150,4 @@ public class TaskController {
 
         return this.taskService.fetchDueByUser(_user, Constants.Dates.DUE_DAYS);
     }
-
-    @RequestMapping(
-            value = "/today/{user}",
-            method = GET,
-            produces = APPLICATION_JSON_VALUE
-    )
-    public List<Task> fetchTaskForToday(@PathVariable String user) throws IllegalStateException, NotFoundException {
-        User _user = this.userService.findById(user);
-        if (_user == null) throw new NotFoundException("user not found with id: " + user);
-
-        return this.taskService.fetchTaskForToday(_user);
-    }
 }

@@ -1,6 +1,10 @@
 package com.byteme.lima.controller;
 
+import com.byteme.lima.domain.Task;
 import com.byteme.lima.domain.User;
+import com.byteme.lima.exception.IllegalStateException;
+import com.byteme.lima.exception.NotFoundException;
+import com.byteme.lima.service.TaskService;
 import com.byteme.lima.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +24,9 @@ public class UserController {
 
     @Autowired
     public UserService userService;
+
+    @Autowired
+    public TaskService taskService;
 
     @RequestMapping(
             value = "",
@@ -85,6 +92,18 @@ public class UserController {
     )
     public void post(@RequestBody User user) throws IOException {
         this.userService.save(user);
+    }
+
+    @RequestMapping(
+            value = "/{user}/task",
+            method = GET,
+            produces = APPLICATION_JSON_VALUE
+    )
+    public List<Task> fetchTaskForToday(@PathVariable String user) throws NotFoundException, IllegalStateException {
+        User _user = this.userService.findById(user);
+        if (_user == null) throw new NotFoundException("user not found with id: " + user);
+
+        return this.taskService.fetchTaskForToday(_user);
     }
 
 }
