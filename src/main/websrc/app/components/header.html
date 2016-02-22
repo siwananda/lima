@@ -1,56 +1,21 @@
-<div class="main-header ui fixed inverted menu">
+<div class="main-header ui fixed inverted menu" ng-init="init()">
     <div class="ui container">
         <a ui-sref="home" class="header item">
             <img class="logo" src="img/Lima-Quickie-Logo.png">
             <span style="padding-left: 5px;">Project</span>
         </a>
-        <a ui-sref="tasks" class="item">My Task</a>
-        <!--<div class="ui simple dropdown item">-->
-            <!--Dropdown <i class="dropdown icon"></i>-->
-            <!--<div class="left menu">-->
-                <!--<a class="item" href="#">Link Item</a>-->
-                <!--<a class="item" href="#">Link Item</a>-->
-                <!--<div class="divider"></div>-->
-                <!--<div class="header">Header Item</div>-->
-                <!--<div class="item">-->
-                    <!--<i class="dropdown icon"></i>-->
-                    <!--Sub Menu-->
-                    <!--<div class="left menu">-->
-                        <!--<a class="item" href="#">Link Item</a>-->
-                        <!--<a class="item" href="#">Link Item</a>-->
-                    <!--</div>-->
-                <!--</div>-->
-                <!--<a class="item" href="#">Link Item</a>-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="ui simple dropdown item">-->
-            <!--<span class="text">Menu</span>-->
-            <!--<i class="dropdown icon"></i>-->
-            <!--<div class="menu">-->
-                <!--<div class="item">-->
-                    <!--<i class="left dropdown icon"></i>-->
-                    <!--<span class="text">Left</span>-->
-                    <!--<div class="left menu">-->
-                        <!--<div class="item">1</div>-->
-                        <!--<div class="item">2</div>-->
-                        <!--<div class="item">3</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-                <!--<div class="item">-->
-                    <!--<i class="dropdown icon"></i>-->
-                    <!--<span class="text">Right</span>-->
-                    <!--<div class="right menu">-->
-                        <!--<div class="item">1</div>-->
-                        <!--<div class="item">2</div>-->
-                        <!--<div class="item">3</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="right menu">-->
-            <!--<a class="toc item">-->
-                <!--<i class="sidebar icon"></i>-->
-            <!--</a>-->
-        <!--</div>-->
+        <a ui-sref="user.tasks({id:user.id})" class="item">My Task</a>
+
+        <div class="right menu">
+            <!--<a class="toc item">
+                <i class="sidebar icon"></i>
+            </a>-->
+            <div class="item">
+                <a class="ui label">
+                    <img src="img/{{user.avatar}}">
+                    {{user.name}}
+                </a>
+            </div>
+        </div>
     </div>
 </div>

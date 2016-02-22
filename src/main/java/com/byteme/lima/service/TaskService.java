@@ -148,17 +148,11 @@ public class TaskService extends AbstractService {
     public List<Task> fetchTaskForToday(User user) throws IllegalStateException {
         Calendar start = Calendar.getInstance();
         Calendar end = Calendar.getInstance();
-        end.add(Calendar.MONTH, 1);
-        end.add(Calendar.DATE, 6);
         end.add(Calendar.DATE, Constants.Dates.DUE_DAYS.intValue());
-        List<String> statuses = new ArrayList<>();
-        statuses.add(Task.Status.IN_PROGRESS.name());
-        statuses.add(Task.Status.BACKLOG.name());
 
         DBObject query = new BasicDBObject();
         query.put("assigneeId", user.id);
         query.put("end", new BasicDBObject("$gte", start.getTime()).append("$lte", end.getTime()));
-        query.put("status", new BasicDBObject("$in", statuses));
 
 
         List<Task> tasks = StreamSupport.stream(this.db.getCollection("tasks").find(query).spliterator(), false)
