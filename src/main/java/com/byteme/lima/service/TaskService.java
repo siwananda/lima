@@ -93,6 +93,8 @@ public class TaskService extends AbstractService {
 
     public Task save(Task task) {
         if (StringUtils.isBlank(task.code)) task.code = "Task-" + UUID.randomUUID().toString();
+        if (task.getStart() == null) task.setStart(new Date());
+        if (task.getEnd() == null) task.setEnd(new Date());
 
         this.db.save(task, "tasks");
         return this.findByCode(task.getCode());
@@ -152,7 +154,7 @@ public class TaskService extends AbstractService {
 
         DBObject query = new BasicDBObject();
         query.put("assigneeId", user.id);
-        query.put("end", new BasicDBObject("$gte", start.getTime()).append("$lte", end.getTime()));
+//        query.put("end", new BasicDBObject("$gte", start.getTime()).append("$lte", end.getTime()));
 
 
         List<Task> tasks = StreamSupport.stream(this.db.getCollection("tasks").find(query).spliterator(), false)
