@@ -23,8 +23,8 @@ var LimaApp = angular.module('LimaApp',
                         controller: 'SidebarController'
                     },
                     'header@': {
-                        template: require('./components/header.html')/*,
-                         controller: 'HeaderController'*/
+                        template: require('./components/header.html'),
+                         controller: 'HeaderController'
                     },
                     'mobilemenu@': {
                         template: require('./components/mobilemenu.html')
@@ -75,6 +75,27 @@ var LimaApp = angular.module('LimaApp',
                             return baseProject.get();
                         }
                     }
+                }
+            })
+            .state('user', {
+                parent: 'site',
+                abstract: true,
+                template: "<ui-view></ui-view>"
+            })
+            .state('user.tasks', {
+                parent: 'site',
+                url: '/user/:id/tasks',
+                data: {
+                    authorities: []
+                },
+                views: {
+                    'content@': {
+                        template: require('./components/usertasks.html'),
+                        controller: 'UserTasksController'
+                    }
+                },
+                resolve: {
+
                 }
             })
             .state('task', {
@@ -198,10 +219,12 @@ require("./directives/task-cards")(LimaApp);
 require("./directives/submission-modal")(LimaApp);
 
 
+require("./controllers/HeaderController")(LimaApp);
 require("./controllers/SidebarController")(LimaApp);
 require("./controllers/HomeController")(LimaApp);
 require("./controllers/ProjectController")(LimaApp);
 require("./controllers/TaskController")(LimaApp);
+require("./controllers/UserTasksController")(LimaApp);
 
 
 module.exports = LimaApp;
