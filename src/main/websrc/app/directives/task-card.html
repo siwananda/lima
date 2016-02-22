@@ -12,7 +12,7 @@
         <a class="header"></a>
     </div>
     <div class="one wide column middle aligned content">
-        <img class="ui mini circular image" src="img/users/{{task.assignee?task.assignee.id:'default'}}.jpg"
+        <img class="ui mini circular image" ng-src="{{task.assignee.avatar}}"
              onerror="this.src='img/default.png'">
     </div>
     <div class="three wide column middle aligned content">

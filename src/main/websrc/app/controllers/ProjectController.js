@@ -20,7 +20,7 @@ module.exports = function (LimaApp) {
         $scope.tasks = [];
         $scope.newTask = {
             name: 'name here',
-            description: 'descripion here'
+            description: 'description here'
         };
         $scope.taskSubmitLoader = $('#taskSubmitLoader').hide();
 
@@ -28,6 +28,10 @@ module.exports = function (LimaApp) {
         console.log("projectDetail loaded");
         var _populateTeam = function (team) {
             $scope.members = team.members;
+            debugger;
+            _.each(project.tasks, function(task){
+                task.assignee = _.find($scope.members, {"id": task.assigneeId});
+            });
             $("#taskList").toggleClass("loading");
         };
 
@@ -42,6 +46,7 @@ module.exports = function (LimaApp) {
 
         //Starts loader
         $("#taskList").toggleClass("loading");
+
         var team = LimaEntity.one(ENDPOINTS.TEAM_REQUEST_PATH, project.teamId);
         team.get().then(_populateTeam);
 

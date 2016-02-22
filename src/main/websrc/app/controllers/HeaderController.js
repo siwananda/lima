@@ -4,8 +4,8 @@ module.exports = function(LimaApp){
         $scope.init = function(){
             var ue = LimaEntity.all(ENDPOINTS.USER_REQUEST_PATH);
             ue.customGET('current').then(function(user){
-                $scope.user = user;
-                $rootScope.currentUser = user;
+                $scope.user = user?user:{name:'Anonymous', avatar:'default.png', id:'123456789'};
+                $rootScope.currentUser = $scope.user;
             });
         };
 

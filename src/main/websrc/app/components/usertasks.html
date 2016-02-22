@@ -1,5 +1,5 @@
 <div class="ui segments" ng-init="init()">
     <div id="taskList" class="ui segment task-item-tab-content">
-        <task-cards tasks="tasks"></task-cards>
+        <user-task-card ng-class="task.status" ng-repeat="task in tasks track by $index" task="task"></user-task-card>
     </div>
 </div>
