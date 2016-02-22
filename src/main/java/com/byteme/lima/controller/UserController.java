@@ -95,7 +95,7 @@ public class UserController {
     }
 
     @RequestMapping(
-            value = "/{user}/task",
+            value = "/{user}/tasks",
             method = GET,
             produces = APPLICATION_JSON_VALUE
     )
