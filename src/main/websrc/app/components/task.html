@@ -33,10 +33,10 @@
     <!--</div>-->
     <!--</div>-->
     <div class="ui segment">
-        <div class="ui three item menu">
+        <div class="ui two item menu">
             <div ui-sref="task.description" ui-sref-active="active" class="active item">Description</div>
             <div ui-sref="task.history" ui-sref-active="active" class="item">History</div>
-            <div ui-sref="task.timetrack" ui-sref-active="active" class="item">Time Tracking</div>
+            <!--<div ui-sref="task.timetrack" ui-sref-active="active" class="item">Time Tracking</div>-->
         </div>
     </div>
     <div class="ui segment task-item-tab-content">
@@ -112,7 +112,7 @@
                         <td><strong>Assignee: </strong></td>
                         <td>
                             <a class="ui image label">
-                                <img src="img/female1.png">
+                                <img src="{{task.assignee.avatar}}">
                                 {{task.assignee.email}}
                             </a>
                         </td>
