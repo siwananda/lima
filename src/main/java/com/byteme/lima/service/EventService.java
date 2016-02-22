@@ -159,4 +159,11 @@ public class EventService extends AbstractService {
         if (source instanceof Team)     this.teamService.save((Team) source);
         if (source instanceof User)     this.userService.save((User) source);
     }
+
+    public void removeAll() {
+        for (DBObject project: this.db.getCollection("events").find()) {
+            this.db.remove(project, "events");
+        }
+    }
+
 }

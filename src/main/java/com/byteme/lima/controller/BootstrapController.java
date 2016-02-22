@@ -1,5 +1,6 @@
 package com.byteme.lima.controller;
 
+import com.byteme.lima.exception.IllegalStateException;
 import com.byteme.lima.service.BootstrapService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +24,7 @@ public class BootstrapController {
             method = GET,
             produces = APPLICATION_JSON_VALUE
     )
-    public void bootstrap() throws IOException {
+    public void bootstrap() throws IOException, IllegalStateException {
         this.bootstrapService.bootstrap();
     }
 }

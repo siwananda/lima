@@ -31,8 +31,12 @@ module.exports = function(LimaApp){
                     $scope.newProject = undefined;
                 },
                 onApprove : function() {
-                    $scope.projectSubmitLoader.show();
-                    $scope.submitProject();
+                    if($('#addProjectForm').form('is valid')){
+                        $scope.projectSubmitLoader.show();
+                        $scope.submitProject();
+                    }else {
+                        $('#addProjectForm').form('validate form')
+                    }
                     return false;
                 }
             })
@@ -60,6 +64,26 @@ module.exports = function(LimaApp){
                 }
             }
         });
+
+
+
+        $('#addProjectForm')
+            .form(
+                {
+                    fields: {
+                        name: {
+                            identifier: 'name',
+                            rules: [
+                                {
+                                    type   : 'empty',
+                                    prompt : 'Please enter task name'
+                                }
+                            ]
+                        }
+                    }
+                }
+            )
+        ;
 
     });
 };

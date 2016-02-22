@@ -3,8 +3,9 @@
         <div class="ui grid">
             <div class="twelve wide column">
                 <h2 class="ui header">
+                    <i class="cube icon"></i>
                     <div class="content">
-                        {{project.code}}
+                        {{project.name}}
                         <div class="sub header">{{project.description}}</div>
                     </div>
                 </h2>
@@ -29,7 +30,7 @@
 <div id="addTaskModal" class="ui modal">
     <div class="header">Add Task</div>
     <div class="content">
-        <div class="ui form">
+        <div id="addTaskForm" class="ui form">
             <div class="field">
                 <label>Name</label>
                 <input name="name" type="text" ng-model="newTask.name">

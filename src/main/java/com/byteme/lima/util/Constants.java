@@ -12,6 +12,6 @@ public interface Constants {
         Long ONE_HOUR   = 60L * ONE_MINUTE;
         Long ONE_DAY    = 24L * ONE_HOUR;
         Long ONE_WEEK   = 7L * ONE_DAY;
-        Long DUE_DAYS = 5L;
+        Long DUE_DAYS = 3L;
     }
 }
