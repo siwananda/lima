@@ -52,6 +52,15 @@ public class UserController {
     }
 
     @RequestMapping(
+            value = "/current",
+            method = GET,
+            produces = APPLICATION_JSON_VALUE
+    )
+    public User getCurrent() {
+        return this.userService.findByEmail("user.9@lima.com");
+    }
+
+    @RequestMapping(
             value = "/{id}",
             method = DELETE,
             produces = APPLICATION_JSON_VALUE)
