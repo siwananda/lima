@@ -1,9 +1,7 @@
 package com.byteme.lima.service;
 
-import com.byteme.lima.domain.Project;
-import com.byteme.lima.domain.Task;
-import com.byteme.lima.domain.Team;
-import com.byteme.lima.domain.User;
+import com.byteme.lima.domain.*;
+import com.byteme.lima.exception.IllegalStateException;
 import com.byteme.lima.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.bson.types.ObjectId;
@@ -29,6 +27,9 @@ public class BootstrapService extends AbstractService {
     @Autowired
     public UserService userService;
 
+    @Autowired
+    public EventService eventService;
+
     public AtomicInteger integer = new AtomicInteger();
 
     public synchronized Integer next() {
@@ -48,13 +49,14 @@ public class BootstrapService extends AbstractService {
         this.teamService.removeAll();
         this.taskService.removeAll();
         this.userService.removeAll();
+        this.eventService.removeAll();
     }
 
-    public void bootstrap() {
+    public void bootstrap() throws IllegalStateException {
         this.cleanup();
         this.admin();
 
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < 3; i++) {
             Project project = new Project();
             Integer _project = this.integer.incrementAndGet();
             project.setCode("Proj-" + _project);
@@ -70,7 +72,7 @@ public class BootstrapService extends AbstractService {
             team.setCode("Team-" + _team);
             team.setName("Name for Team with code " + team.getCode());
             team.setMemberIds(new ArrayList<>());
-            for (int ii = 0; ii < 20; ii++) {
+            for (int ii = 0; ii < 4; ii++) {
                 //create user
                 User user = new User();
                 Integer _user = this.integer.incrementAndGet();
@@ -82,6 +84,7 @@ public class BootstrapService extends AbstractService {
 
                 user = this.userService.save(user);
                 team.getMemberIds().add(user.getId());
+                team = this.teamService.save(team);
 
                 //create task
                 Task task = new Task();
@@ -96,6 +99,13 @@ public class BootstrapService extends AbstractService {
 
                 task = this.taskService.save(task);
                 project.getTaskIds().add(task.getId());
+
+                project = this.projectService.save(project);
+                //history
+                eventService.assign(user, team);
+                eventService.add(project, task);
+                eventService.assign(task, user);
+                eventService.assign(project, team);
             }
 
             team = this.teamService.save(team);
