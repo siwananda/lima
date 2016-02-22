@@ -64,7 +64,7 @@ public class UserController {
             produces = APPLICATION_JSON_VALUE
     )
     public User getCurrent() {
-        return this.userService.findByEmail("arnold9@lima.com");
+        return this.userService.findByEmail("arnold@lima.com");
     }
 
     @RequestMapping(
