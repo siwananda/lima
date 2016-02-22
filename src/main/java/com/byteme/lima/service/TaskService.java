@@ -3,6 +3,7 @@ package com.byteme.lima.service;
 import com.byteme.lima.domain.Task;
 import com.byteme.lima.domain.User;
 import com.byteme.lima.exception.IllegalStateException;
+import com.byteme.lima.util.Constants;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.QueryBuilder;
@@ -11,10 +12,7 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -145,5 +143,29 @@ public class TaskService extends AbstractService {
         return StreamSupport.stream(this.db.getCollection("tasks").find(query).spliterator(), false)
                 .map(it -> this.db.getConverter().read(Task.class, it))
                 .collect(Collectors.toList());
+    }
+
+    public List<Task> fetchTaskForToday(User user) throws IllegalStateException {
+        Calendar start = Calendar.getInstance();
+        Calendar end = Calendar.getInstance();
+        end.add(Calendar.MONTH, 1);
+        end.add(Calendar.DATE, 6);
+        end.add(Calendar.DATE, Constants.Dates.DUE_DAYS.intValue());
+        List<String> statuses = new ArrayList<>();
+        statuses.add(Task.Status.IN_PROGRESS.name());
+        statuses.add(Task.Status.BACKLOG.name());
+
+        DBObject query = new BasicDBObject();
+        query.put("assigneeId", user.id);
+        query.put("end", new BasicDBObject("$gte", start.getTime()).append("$lte", end.getTime()));
+        query.put("status", new BasicDBObject("$in", statuses));
+
+
+        List<Task> tasks = StreamSupport.stream(this.db.getCollection("tasks").find(query).spliterator(), false)
+                .map(it -> this.db.getConverter().read(Task.class, it))
+                .collect(Collectors.toList());
+
+        tasks.sort((Task task1, Task task2) -> task1.getEnd().compareTo(task2.getEnd()));
+        return tasks;
     }
 }
