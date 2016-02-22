@@ -1,5 +1,5 @@
 module.exports = function (LimaApp) {
-    LimaApp.directive('projectCard', function ($state, LimaEntity, ENDPOINTS) {
+    LimaApp.directive('projectCard', function ($state, LimaEntity, ENDPOINTS, STATUSES) {
 
         return {
             restrict: 'E',
@@ -8,6 +8,17 @@ module.exports = function (LimaApp) {
                 project: '='
             },
             link: function (scope, element, attrs) {
+
+                var _grabLabel = function(value){
+                    return STATUSES[value].label;
+                };
+
+                var _grabLabelColor = function(value){
+                    return STATUSES[value].color;
+                };
+
+                scope.project.statusLabel = _grabLabel(scope.project.status);
+                scope.project.colorLabel = _grabLabelColor(scope.project.status);
 
                 scope.members = [];
                 scope.tasks = [];
